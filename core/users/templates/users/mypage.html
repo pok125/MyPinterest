@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
+    <h2>
+        {{ target_user.username }}
+    </h2>
+    <p>
+        {{ target_user.date_joined }}
+    </p>
+</div>    
+{% endblock %}
+    

@@ -11,6 +11,9 @@
                 <span>SignIn</span>
             </a>
         {% else %}
+            <a href="{% url 'users:mypage' pk=user.pk %}">
+                <span>MyPage</span>
+            </a>
             <a href="{% url 'users:signout' %}?next={{ request.path }}">
                 <span>SignOut</span>
             </a>
