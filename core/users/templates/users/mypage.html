@@ -8,6 +8,12 @@
     <p>
         {{ target_user.date_joined }}
     </p>
+    
+    {% if target_user == user %}
+    <a href="{% url 'users:delete' pk=user.pk %}">회원탈퇴</a>
+        
+    {% endif %}
+        
 </div>    
 {% endblock %}
     

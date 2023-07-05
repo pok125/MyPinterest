@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from users.forms import UpdateInfoForm
 
 def test(request):
     return render(request, 'base.html')
@@ -28,3 +29,9 @@ class MyPage(DetailView):
     model = User
     context_object_name = 'target_user'
     template_name = 'users/mypage.html'
+
+
+class UserDelete(DeleteView):
+    model = User
+    template_name = 'users/delete.html'
+    success_url = reverse_lazy('users:signin')

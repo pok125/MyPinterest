@@ -9,4 +9,5 @@ urlpatterns = [
     path('signin/', SignIn.as_view(), name='signin'),
     path('signout/', SignOut.as_view(), name='signout'),
     path('mypage/<int:pk>', MyPage.as_view(), name='mypage'),
+    path('delete/<int:pk>', UserDelete.as_view(), name='delete'),
 ]
