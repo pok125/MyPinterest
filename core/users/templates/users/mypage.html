@@ -2,13 +2,21 @@
 
 {% block content %}
 <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-    <h2>
-        {{ target_user.username }}
-    </h2>
     <p>
         {{ target_user.date_joined }}
     </p>
-    
+
+    {% if target_user.profile %}
+    <h2>
+        {{ target_user.profile.nickname }}
+    </h2>
+    {% else %}
+    <a href="{% url 'profiles:create' %}">
+        <h2>프로필 만들기</h2>
+    </a>
+   
+    {% endif %}
+        
     {% if target_user == user %}
     <a href="{% url 'users:delete' pk=user.pk %}">회원탈퇴</a>
         
