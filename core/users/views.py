@@ -4,7 +4,11 @@ from django.views.generic import CreateView, DetailView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from users.forms import UpdateInfoForm
+from django.utils.decorators import method_decorator
+from users.decorators import ownership_required
+from django.contrib.auth.decorators import login_required
+
+has_ownership = [login_required, ownership_required]
 
 def test(request):
     return render(request, 'base.html')
@@ -31,6 +35,8 @@ class MyPage(DetailView):
     template_name = 'users/mypage.html'
 
 
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class UserDelete(DeleteView):
     model = User
     template_name = 'users/delete.html'
