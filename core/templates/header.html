@@ -3,9 +3,15 @@
         MyPinterest
     </h1>
     <nav>
-        <span>nav1</span>
+        <a href="{% url 'articles:list' %}">
+            <span>Articles</span>
+        </a>
+
         <span>nav2</span>
-        <span>nav3</span>
+       
+        <a href="{% url 'users:signup' %}">
+            <span>SignUp</span>
+        </a>
         {% if not user.is_authenticated %}
             <a href="{% url 'users:signin' %}?next={{ request.path }}">
                 <span>SignIn</span>
