@@ -16,6 +16,16 @@
     <a href="{% url 'articles:update' pk=target_article.pk %}">수정하기</a>
     <a href="{% url 'articles:delete' pk=target_article.pk %}">삭제하기</a>
     {% endif %}
+    
+    <hr>
+    
+    {% if target_article.comment.all %}
+        {% for comment in target_article.comment.all %}
+            <p>{{ comment.content }}</p>
+        {% endfor %}
+    {% endif %}
+        
+    {% include 'comment/create.html' with article=target_article %}
          
 </div>    
 {% endblock %}
