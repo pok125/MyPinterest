@@ -15,37 +15,28 @@
             border-radius: 1rem;
         }
     </style>
+    
+    {% if article_list %}
     <div class="container">
-        <div class="item1">
-            <img src="https://picsum.photos/200/300" alt="">
-        </div>
+        
+        {% for article in article_list %}
         <div>
-            <img src="https://picsum.photos/200/340" alt="">
+            <a href="{% url 'articles:detail' pk=article.pk %}">
+                <img src="{{ article.image.url }}" alt="">
+            </a>
         </div>
-        <div>
-            <img src="https://picsum.photos/200/200" alt="">
-        </div>
-        <div>
-            <img src="https://picsum.photos/200/250" alt="">
-        </div>
-        <div>
-            <img src="https://picsum.photos/200/350" alt="">
-        </div>
-        <div>
-            <img src="https://picsum.photos/200/400" alt="">
-        </div>
-        <div>
-            <img src="https://picsum.photos/200/340" alt="">
-        </div>
-        <div>
-            <img src="https://picsum.photos/200/240" alt="">
-        </div>
+            
+        {% endfor %}
+        <script src="{% static 'js/magic_grid.js' %}"></script>   
     </div>
+    {% else %}
+    <p>No Article</p>
+    {% endif %}
     <div style="text-align: center;">
         <a href="{% url 'articles:create' %}" class="btn btn-dark rounded-pill col-6 mt-3">
             등록하기
         </a>
     </div>
-      <script src="{% static 'js/magic_grid.js' %}"></script>
+      
 {% endblock %}
     
