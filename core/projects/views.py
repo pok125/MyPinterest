@@ -5,6 +5,7 @@ from django.views.generic.list import MultipleObjectMixin
 from django.views.generic import CreateView, DetailView, ListView
 
 from articles.models import Article
+from subscriptions.models import Subscription
 from .forms import ProjectCreationForm
 from .models import Project
 
@@ -23,8 +24,14 @@ class ProjectDetail(DetailView, MultipleObjectMixin):
     template_name = 'projects/detail.html'
 
     def get_context_data(self, **kwargs: Any):
-        article_list = Article.objects.filter(project=self.get_object())
-        return super().get_context_data(object_list=article_list, **kwargs)
+        project = self.get_object()
+        user = self.request.user
+        article_list = Article.objects.filter(project=project)
+        
+        if user.is_authenticated:
+            subscription = Subscription.objects.filter(user=user, project=project)
+            
+        return super().get_context_data(object_list=article_list, subscription=subscription, **kwargs)
 
 class ProjectList(ListView):
     model = Project

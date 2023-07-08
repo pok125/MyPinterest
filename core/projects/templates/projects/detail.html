@@ -25,6 +25,20 @@
     <p>
         {{ target_project.description }}
     </p>
+    
+    {% if user.is_authenticated %}
+        <!-- 구독버튼 -->
+        
+        {% if not subscription %}
+        <a href="{% url 'subscriptions:subscribe' %}?project_pk={{ target_project.pk }}" class="btn btn-dark rounded-pill col-6 mt-3">구독</a>
+        {% else %}
+        <a href="{% url 'subscriptions:subscribe' %}?project_pk={{ target_project.pk }}" class="btn btn-danger rounded-pill col-6 mt-3">구독취소</a>
+        {% endif %}
+            
+     
+    {% endif %}
+        
+    
 </div> 
 <hr> 
 <!-- articles -->
