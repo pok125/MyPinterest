@@ -4,6 +4,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView,
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormMixin
+
 from .decorators import ownership_required
 from .forms import ArticleCreationForm
 from .models import Article

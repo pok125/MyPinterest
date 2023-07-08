@@ -26,10 +26,9 @@
             </a>
             <p>{{ project.title | truncatechars:8 }}</p>
         </div>
-            
-        {% endfor %}
-        <script src="{% static 'js/magic_grid.js' %}"></script>   
+        {% endfor %} 
     </div>
+    <script src="{% static 'js/magic_grid.js' %}"></script>
     {% else %}
     <p style="text-align: center;">No Project</p>
     {% endif %}
@@ -37,6 +36,5 @@
         <a href="{% url 'projects:create' %}" class="btn btn-dark rounded-pill col-6 mt-3">
             프로젝트 생성
         </a>
-    </div>
-      
+    </div>   
 {% endblock %}

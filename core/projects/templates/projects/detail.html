@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<style>
+    .container div {
+                width: 250px;
+                background-color: antiquewhite;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 1rem;
+            }
+    .container img {
+        width: 100%;
+        border-radius: 1rem;
+    }
+</style>
 <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
     <h2>
     {{ target_project.title }}
@@ -11,6 +25,20 @@
     <p>
         {{ target_project.description }}
     </p>
+</div> 
+<hr> 
+<!-- articles -->
+{% if object_list %}
+<div class="container">
+    {% for article in object_list %}
+    <div>
+        <a href="{% url 'articles:detail' pk=article.pk %}">
+            <img src="{{ article.image.url }}" alt="">
+        </a>
+    </div>
+    {% endfor %}
+</div>
+<script src="{% static 'js/magic_grid.js' %}"></script>   
 
-</div>    
+{% endif %}
 {% endblock %}
