@@ -13,9 +13,6 @@ from users.decorators import ownership_required
 
 has_ownership = [login_required, ownership_required]
 
-def test(request):
-    return render(request, 'base.html')
-
 
 class SignUp(CreateView):
     model = User
