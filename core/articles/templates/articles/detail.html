@@ -5,7 +5,9 @@
     <h2>
     {{ target_article.title }}
     </h2>
-    
+    <div>
+        <a href="{% url 'articles:like' pk=target_article.pk %}">좋아요</a>
+    </div>
     <img src="{{ target_article.image.url }}" alt=""
     style="height: 15rem; width: 15rem; border-radius: 1rem; margin-bottom: 2rem;">
     <p>
