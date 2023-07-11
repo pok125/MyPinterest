@@ -1,13 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView, RedirectView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormMixin
 
 from .decorators import ownership_required
 from .forms import ArticleCreationForm
-from .models import Article
+from .models import Article, Like
 from comment.forms import CommentCreationForm
 
 
@@ -62,3 +62,23 @@ class ArticleListView(ListView):
     model = Article
     context_object_name = 'article_list'
     template_name = 'articles/list.html'
+
+
+class LikeArticle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('articles:detail', kwargs={'pk': kwargs['pk']})
+    
+    def get(self, *args, **kwargs):
+
+        user = self.request.user
+        article = get_object_or_404(Article, pk=kwargs['pk'])
+
+        if Like.objects.filter(user=user, article=article).exists():
+            return redirect('articles:detail', pk=kwargs['pk'])
+        else:
+            Like.objects.create(user=user, article=article)
+        
+        article.like_count += 1
+        article.save()
+
+        return super().get(self.request, *args, **kwargs)
