@@ -4,6 +4,15 @@
 <body>
     {% include 'header.html' %}
     <hr>
+    
+    {% for message in messages %}
+        <div class="text-center">
+            <div class="btn btn-{{ message.tags }}">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+        
     {% block content %}
     {% endblock %}  
     <hr>

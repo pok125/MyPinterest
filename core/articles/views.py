@@ -4,7 +4,7 @@ from django.views.generic import CreateView, DetailView, UpdateView, DeleteView,
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormMixin
-
+from django.contrib import messages
 from .decorators import ownership_required
 from .forms import ArticleCreationForm
 from .models import Article, Like
@@ -74,11 +74,14 @@ class LikeArticle(RedirectView):
         article = get_object_or_404(Article, pk=kwargs['pk'])
 
         if Like.objects.filter(user=user, article=article).exists():
+            messages.add_message(self.request, messages.ERROR, '좋아요는 한번만 가능합니다.')
             return redirect('articles:detail', pk=kwargs['pk'])
         else:
             Like.objects.create(user=user, article=article)
         
         article.like_count += 1
         article.save()
+
+        messages.add_message(self.request, messages.SUCCESS, '좋아요가 반영되었습니다.')
 
         return super().get(self.request, *args, **kwargs)
