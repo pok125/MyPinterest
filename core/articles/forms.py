@@ -1,9 +1,9 @@
 from django.forms import ModelForm
-from .models import Article
+# from .models import Article
 
 
-class ArticleCreationForm(ModelForm):
+# class ArticleCreationForm(ModelForm):
     
-    class Meta:
-        model = Article
-        fields = ['title', 'project', 'image', 'content']
+#     class Meta:
+#         model = Article
+#         fields = ['title', 'project', 'image', 'content']

@@ -1,10 +1,10 @@
-from django.forms import ModelForm
+# from django.forms import ModelForm
 
-from .models import Project
+# from .models import Project
 
 
-class ProjectCreationForm(ModelForm):
+# class ProjectCreationForm(ModelForm):
 
-    class Meta:
-        model = Project
-        fields = ['title', 'description', 'image']
+#     class Meta:
+#         model = Project
+#         fields = ['title', 'description', 'image']

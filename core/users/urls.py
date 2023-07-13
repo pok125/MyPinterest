@@ -4,9 +4,10 @@ from users.views import *
 app_name = 'users'
 
 urlpatterns = [
-    path('signup/', SignUp.as_view(), name='signup'),
-    path('signin/', SignIn.as_view(), name='signin'),
-    path('signout/', SignOut.as_view(), name='signout'),
-    path('mypage/<int:pk>', MyPage.as_view(), name='mypage'),
-    path('delete/<int:pk>', UserDelete.as_view(), name='delete'),
+    # path('signup/', SignUp.as_view(), name='signup'),
+    # path('signin/', SignIn.as_view(), name='signin'),
+    # path('signout/', SignOut.as_view(), name='signout'),
+    # path('mypage/<int:pk>', MyPage.as_view(), name='mypage'),
+    # path('delete/<int:pk>', UserDelete.as_view(), name='delete'),
+    path('join/', JoinView.as_view(), name='join'),
 ]

@@ -3,7 +3,7 @@
         MyPinterest
     </h1>
     <nav>
-        <a href="{% url 'articles:list' %}">
+        {% comment %} <a href="{% url 'articles:list' %}">
             <span>Articles</span>
         </a>
 
@@ -14,13 +14,13 @@
         <a href="{% url 'projects:list' %}">
             <span>Projects</span>
         </a>
-       
-        <a href="{% url 'users:signup' %}">
-            <span>SignUp</span>
-        </a>
-        {% if not user.is_authenticated %}
-            <a href="{% url 'users:signin' %}?next={{ request.path }}">
-                <span>SignIn</span>
+       {% endcomment %}
+        <a href="{% url 'users:join' %}">
+            <span>회원가입</span>
+        </a> 
+        {% comment %} {% if not user.is_authenticated %}
+            <a href="{% url 'users:login' %}?next={{ request.path }}">
+                <span>로그인</span>
             </a>
         {% else %}
             <a href="{% url 'users:mypage' pk=user.pk %}">
@@ -29,6 +29,6 @@
             <a href="{% url 'users:signout' %}?next={{ request.path }}">
                 <span>SignOut</span>
             </a>
-        {% endif %}
+        {% endif %} {% endcomment %}
     </nav>
 </div>

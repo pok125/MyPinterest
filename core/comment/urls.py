@@ -4,5 +4,5 @@ from .views import *
 app_name = 'comment'
 
 urlpatterns = [
-    path('create/', CommentCreate.as_view(), name='create'),
+    # path('create/', CommentCreate.as_view(), name='create'),
 ]
