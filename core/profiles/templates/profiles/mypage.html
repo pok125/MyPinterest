@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .container div {
+                width: 250px;
+                background-color: antiquewhite;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 1rem;
+            }
+    .container img {
+        width: 100%;
+        border-radius: 1rem;
+    }
+</style>
+<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
+    
+    <!-- 프로필 이미지 -->
+    {% if target_user_profile_image_url %}
+        <img src="{{ target_user_profile_image_url }}" alt="" style="height: 12rem; width: 12rem; border-radius: 10rem; margin-bottom: 2rem;">
+    {% else %}
+        <img src="{% static 'image/default_profile.png' %}" alt="" style="height: 12rem; width: 12rem; border-radius: 10rem; margin-bottom: 2rem;">    
+    {% endif %}
+        
+    <!-- 닉네임 -->
+    <h2>
+        {{ target_user_username }}
+    </h2>
+    <!-- 메세지 -->
+    <p>
+        {{ target_user_profile_message }}
+    </p>
+    
+    {% if target_user == request.user %}
+        <a href="">수정하기</a>
+        <a href="">회원탈퇴</a>
+    {% endif %}
+
+</div>   
+<hr>  
+{% endblock %}

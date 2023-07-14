@@ -23,10 +23,9 @@
                 <span>로그인</span>
             </a>
         {% else %}
-
-            {% comment %} <a href="{% url 'users:mypage' pk=user.pk %}">
+            <a href="{% url 'profiles:mypage' user_id=user.pk %}">
                 <span>MyPage</span>
-            </a> {% endcomment %}
+            </a>
             <a href="{% url 'users:logout' %}">
                 <span>로그아웃</span>
             </a>
