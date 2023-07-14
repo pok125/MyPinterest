@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404
 # # Create your views here.
 from django.contrib.auth import get_user_model
 from django.views import View
+from django.http import HttpResponseBadRequest
 from .models import Profile
 from .forms import ProfileForm
 
@@ -47,9 +48,37 @@ class ProfileView(View):
         profile = get_object_or_404(Profile, user_id=user_id)
         profile_image_url = profile.image.url if profile.image else ''
         context = {
+            'target_user_id': user_id,
             'target_user_profile_image_url': profile_image_url,
             'target_user_username': profile.user.username,
             'target_user_profile_message': profile.message
         }
 
         return render(request, 'profiles/mypage.html', context=context)
+    
+
+class ProfileUpdateView(View):
+    # form에 대한 초기 값 세팅을 위해 initial객체 사용
+    def get_initial(self, profile):
+        initial = dict()
+        initial['image'] = profile.image
+        initial['message'] = profile.message
+
+        return initial
+    
+    # 프로필 수정 페이지
+    def get(self, request, profile_id):
+        user = request.user
+        profile = get_object_or_404(Profile, pk=profile_id)
+
+        # 로그인하지 않은 유저, 요청한 유저와 수정할 유저 객체가 다를 경우
+        if not user.is_authenticated or user != profile.user:
+            return HttpResponseBadRequest()
+        
+        initial = self.get_initial(profile)
+        form = ProfileForm(initial=initial)
+        context = {
+            'form': form
+        }
+
+        return render(request, 'profiles/update.html', context=context)
