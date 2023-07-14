@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
@@ -11,14 +10,8 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('User must have an email')
     
-        # 내 현재 국가 시간
-        now = timezone.localtime()
         email = self.normalize_email(email)
-        user = self.model(
-            email=email,
-            date_joined=now,
-            **extra_fields
-        )
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -36,7 +29,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True, max_length=100)
     date_joined = models.DateTimeField(auto_now_add=True)
-    nickname = models.CharField(max_length=20, 
+    username = models.CharField(max_length=20, 
                                 unique=True,
                                 help_text=_("Required. 20 characters or fewer. Letters, digits and @/./+/-/_ only."),
                                 error_messages={"unique": _("A user with that nickname already exists.")})
@@ -48,7 +41,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     # superuser생성 시, 필수 입력 정보 설정
-    REQUIRED_FIELDS = ['nickname']
+    REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
 

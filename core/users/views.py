@@ -12,7 +12,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import get_user_model
 from .forms import JoinForm, LoginForm
 
@@ -132,3 +132,12 @@ class LoginView(View):
         }
 
         return render(request, 'users/login.html', context=context)
+
+
+### Logout
+class LogoutView(View):
+    # 로그아웃 요청
+    def get(self, request):
+        logout(request)
+        
+        return redirect('/')

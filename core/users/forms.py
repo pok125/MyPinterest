@@ -8,7 +8,7 @@ class JoinForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'nickname']
+        fields = ['email', 'username']
 
 class LoginForm(AuthenticationForm):
 
