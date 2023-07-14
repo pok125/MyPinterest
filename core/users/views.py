@@ -13,8 +13,10 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login, authenticate
+from django.contrib.auth import get_user_model
 from .forms import JoinForm, LoginForm
 
+User = get_user_model()
 # has_ownership = [login_required, ownership_required]
 
 
@@ -50,15 +52,17 @@ from .forms import JoinForm, LoginForm
 #     template_name = 'users/delete.html'
 #     success_url = reverse_lazy('users:signin')
 
-
+### Join
 class JoinView(View):
     # 회원가입 페이지
     def get(self, request):
         user = request.user
 
         # 이미 로그인 한 상태인 유저
-        # if user.is_authenticated:
-        #     return redirect('')
+        if user.is_authenticated:
+            messages.add_message(request, messages.ERROR, '로그아웃 후 진행해 주세요.')
+            
+            return redirect('/')
         
         form = JoinForm()
         context = {
@@ -73,18 +77,58 @@ class JoinView(View):
         
         # form 유효성 검사
         if form.is_valid():
-            print(form.data)
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
-            print(email, password)
-            # user 유효성 검사
-            user = authenticate(username=email, password=password)
-            print(user)
-            if user:
-                return redirect('users:login')
+            form.save()
+
+            return redirect('users:login')
         
-        messages.add_message(self.request, messages.ERROR, '회원가입에 실패했습니다.')
+        messages.add_message(request, messages.ERROR, '회원가입에 실패했습니다.')
+        
         context = {
             'form': form
         }
+
         return render(request, 'users/join.html', context=context)
+
+
+### Login
+class LoginView(View):
+    # 로그인 페이지
+    def get(self, request):
+        user = request.user
+
+        # 이미 로그인된 유저
+        if user.is_authenticated:
+            messages.add_message(request, messages.ERROR, '이미 로그인된 상태입니다.')
+            
+            return redirect('/')
+        
+        form = LoginForm()
+        context = {
+            'form': form
+        }
+
+        return render(request, 'users/login.html', context=context)
+    
+    # 로그인 요청
+    def post(self, request):
+        form = LoginForm(request, request.POST)
+        
+        # form 유효성 검사
+        if form.is_valid():
+            email = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(email=email, password=password)
+
+            # 해당 입력 정보에 대한 유저검사
+            if user:
+                login(request, user)
+        
+                return redirect('/')
+
+        messages.add_message(request, messages.ERROR, '입력하신 정보가 유효하지 않습니다.')
+
+        context = {
+            'form': form
+        }
+
+        return render(request, 'users/login.html', context=context)

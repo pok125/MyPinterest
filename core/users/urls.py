@@ -10,4 +10,5 @@ urlpatterns = [
     # path('mypage/<int:pk>', MyPage.as_view(), name='mypage'),
     # path('delete/<int:pk>', UserDelete.as_view(), name='delete'),
     path('join/', JoinView.as_view(), name='join'),
+    path('login/', LoginView.as_view(), name='login'),
 ]

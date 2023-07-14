@@ -114,6 +114,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# username대신 email을 사용하도록 설정
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# UserModel
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -125,9 +132,6 @@ TIME_ZONE = 'Asia/Seoul'
 USE_I18N = True
 
 USE_TZ = True
-
-# UserModel
-AUTH_USER_MODEL = 'users.User'
 
 # LoginRedirectURL
 # LOGIN_REDIRECT_URL = BASE_DIR / reverse('users:login')
