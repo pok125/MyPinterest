@@ -13,10 +13,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth import get_user_model
 from .forms import JoinForm, LoginForm
+from profiles.models import Profile
 
-User = get_user_model()
 # has_ownership = [login_required, ownership_required]
 
 
@@ -77,7 +76,8 @@ class JoinView(View):
         
         # form 유효성 검사
         if form.is_valid():
-            form.save()
+            user = form.save()
+            Profile.objects.create(user=user)
 
             return redirect('users:login')
         
