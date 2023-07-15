@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 # from django.urls import reverse, reverse_lazy
 # from django.views.generic import CreateView, UpdateView
 # from profiles.forms import ProfileForm
@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 # from profiles.decorators import ownership_required
 # # Create your views here.
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.views import View
 from django.http import HttpResponseBadRequest
 from .models import Profile
@@ -77,6 +78,26 @@ class ProfileUpdateView(View):
         
         initial = self.get_initial(profile)
         form = ProfileForm(initial=initial)
+        context = {
+            'form': form
+        }
+
+        return render(request, 'profiles/update.html', context=context)
+
+    # 프로필 수정 요청
+    def post(self, request, profile_id):
+        form = ProfileForm(request.POST, request.FILES)
+        profile = get_object_or_404(Profile, pk=profile_id)
+
+        if form.is_valid():
+            profile.image = form.cleaned_data['image']
+            profile.message = form.cleaned_data['message']
+            profile.save()
+
+            return redirect('profiles:mypage', user_id=request.user.pk)
+        
+        messages.add_message(request, messages.ERROR, '회원정보 수정에 실패하였습니다.')
+
         context = {
             'form': form
         }
