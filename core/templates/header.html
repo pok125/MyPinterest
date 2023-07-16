@@ -3,18 +3,18 @@
         MyPinterest
     </h1>
     <nav>
-        {% comment %} <a href="{% url 'articles:list' %}">
-            <span>Articles</span>
+        <a href="{% url 'pins:list' %}">
+            <span>모든 Pin</span>
         </a>
 
-        <a href="{% url 'subscriptions:list' %}">
+        {% comment %} <a href="{% url 'subscriptions:list' %}">
             <span>MySubscriptions</span>
         </a>
 
         <a href="{% url 'projects:list' %}">
             <span>Projects</span>
-        </a>
-       {% endcomment %}
+        </a> {% endcomment %}
+       
         <a href="{% url 'users:join' %}">
             <span>회원가입</span>
         </a> 
