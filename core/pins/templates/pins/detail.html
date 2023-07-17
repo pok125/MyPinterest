@@ -16,7 +16,7 @@
     </p>
     
     {% if pin_writer_id == request.user.pk %}
-    <a href="">수정하기</a>
+    <a href="{% url 'pins:update' pin_id=pin_id %}">수정하기</a>
     <a href="">삭제하기</a>
     {% endif %}
     
