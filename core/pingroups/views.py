@@ -119,3 +119,17 @@ class PinGroupUpdateView(LoginRequiredMixin, View):
 
         return render(request, 'pingroups/update.html', context=context)
 
+
+### PinGroupDelete
+class PinGroupDeleteView(LoginRequiredMixin, View):
+    # 삭제 요청
+    def post(self, request, pingroup_id):
+        pingroup = get_object_or_404(PinGroup, pk=pingroup_id)
+        user = request.user
+
+        if pingroup.user != user:
+            return HttpResponseBadRequest()
+        
+        pingroup.delete()
+        
+        return redirect('pingroups:list')
