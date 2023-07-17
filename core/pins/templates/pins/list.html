@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% if pin_list %}
+    <div class="container">
+        
+        
+        <script src="{% static 'js/magic_grid.js' %}"></script>   
+    </div>
+    {% else %}
+    <p>게시된 글이 없습니다.</p>
+    {% endif %}
+    <div style="text-align: center;">
+        <a href="#" class="btn btn-dark rounded-pill col-6 mt-3">
+            등록하기
+        </a>
+    </div>
+      
+{% endblock %}
