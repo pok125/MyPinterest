@@ -12,7 +12,7 @@
     </p>
     
     {% if pingroup_user_id == request.user.pk %}
-    <a href="">수정하기</a>
+    <a href="{% url 'pingroups:update' pingroup_id=pingroup_id %}">수정하기</a>
     <form action="" method="post" id="delete-form">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger" id="delete-btn">삭제하기</button>

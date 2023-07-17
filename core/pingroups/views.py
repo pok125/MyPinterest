@@ -59,7 +59,7 @@ class PinGroupDetailView(LoginRequiredMixin, View):
         if pingroup.user != user:
             return HttpResponseBadRequest()
         
-        context={
+        context = {
             'pingroup_id': pingroup_id,
             'pingroup_user_id': pingroup.user.pk,
             'pingroup_title': pingroup.title,
@@ -68,3 +68,54 @@ class PinGroupDetailView(LoginRequiredMixin, View):
         }
 
         return render(request, 'pingroups/detail.html', context=context)
+
+
+### PinGroupUpdate
+class PinGroupUpdateView(LoginRequiredMixin, View):
+
+    def get_initial(self, pingroup):
+        initial = dict()
+        initial['title'] = pingroup.title
+        initial['image'] = pingroup.image
+        initial['content'] = pingroup.content
+
+        return initial
+    
+    # update 페이지
+    def get(self, request, pingroup_id):
+        pingroup = get_object_or_404(PinGroup, pk=pingroup_id)
+        user = request.user
+
+        if pingroup.user != user:
+            return HttpResponseBadRequest()
+        
+        initial = self.get_initial(pingroup)
+        form = PinGroupCreationForm(initial=initial)
+        context = {
+            'pingroup_id': pingroup_id,
+            'form': form
+        }
+
+        return render(request, 'pingroups/update.html', context=context)
+    
+    # PinGroup 수정 요청
+    def post(self, request, pingroup_id):
+        pingroup = get_object_or_404(PinGroup, pk=pingroup_id)
+        form = PinGroupCreationForm(data=request.POST, files=request.FILES)
+
+        if form.is_valid():
+            pingroup.title = form.cleaned_data['title']
+            pingroup.image = form.cleaned_data['image']
+            pingroup.content = form.cleaned_data['content']
+            pingroup.save()
+
+            return redirect('pingroups:list')
+        
+        messages.add_message(request, messages.ERROR, 'PinGroup수정에 실패했습니다.')
+        context = {
+            'pingroup_id': pingroup_id,
+            'form': form
+        }
+
+        return render(request, 'pingroups/update.html', context=context)
+
