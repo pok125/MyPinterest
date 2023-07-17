@@ -50,8 +50,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'users',
     'profiles',
-    'articles',
-    'comment',
+    'pins',
+    'pingroups',
     'projects',
     'subscriptions',
 ]
