@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    
+    {% if pingroup_list %}
+    <div class="pingroup_container">
+        
+        {% for pingroup in pingroup_list %}
+        <div style="display: block; text-align: center;">
+            <a href="#">
+                <img src="{{ pingroup.image.url }}" alt="" >
+            </a>
+            <p>{{ pingroup.title | truncatechars:8 }}</p>
+        </div>
+        {% endfor %} 
+    </div>
+    <script src="{% static 'js/magic_grid.js' %}"></script>
+    {% else %}
+    <p style="text-align: center;">No PinGroup</p>
+    {% endif %}
+    <div style="text-align: center;">
+        <a href="{% url 'pingroups:create' %}" class="btn btn-dark rounded-pill col-6 mt-3">
+            프로젝트 생성
+        </a>
+    </div>   
+{% endblock %}

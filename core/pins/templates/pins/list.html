@@ -2,8 +2,15 @@
 {% load static %}
 {% block content %}
     {% if pin_list %}
-    <div class="container">
-        
+    <div class="pin_container">
+        {% for pin in pin_list %}
+        <div>
+            <a href="">
+                <img src="{{ pin.image.url }}" alt="">
+            </a>
+        </div>
+            
+        {% endfor %}
         
         <script src="{% static 'js/magic_grid.js' %}"></script>   
     </div>

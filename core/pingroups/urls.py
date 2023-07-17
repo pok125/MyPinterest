@@ -1,3 +1,9 @@
+from django.urls import path
+from .views import *
+
+app_name = 'pingroups'
+
 urlpatterns = [
-    
+    path('list', PinGroupListView.as_view(), name='list'),
+    path('create', PinGroupCreateView.as_view(), name='create'),
 ]
