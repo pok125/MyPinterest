@@ -1,7 +1,8 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseBadRequest
 from .models import PinGroup
 from .forms import PinGroupCreationForm
 
@@ -46,3 +47,24 @@ class PinGroupCreateView(LoginRequiredMixin, View):
         }
 
         return render(request, 'pingroups/create', context=context)
+    
+
+### PinGroupDetail
+class PinGroupDetailView(LoginRequiredMixin, View):
+    # PinGroup 상세 페이지
+    def get(self, request, pingroup_id):
+        pingroup = get_object_or_404(PinGroup, pk=pingroup_id)
+        user = request.user
+        
+        if pingroup.user != user:
+            return HttpResponseBadRequest()
+        
+        context={
+            'pingroup_id': pingroup_id,
+            'pingroup_user_id': pingroup.user.pk,
+            'pingroup_title': pingroup.title,
+            'pingroup_image_url': pingroup.image.url,
+            'pingroup_content': pingroup.content
+        }
+
+        return render(request, 'pingroups/detail.html', context=context)

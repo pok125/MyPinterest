@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
+    <h2>
+    {{ pingroup_title }}
+    </h2>
+    <img src="{{ pingroup_image_url }}" alt=""
+    style="height: 15rem; width: 15rem; border-radius: 1rem; margin-bottom: 2rem;">
+    <p>
+        {{ pingroup_content }}
+    </p>
+    
+    {% if pingroup_user_id == request.user.pk %}
+    <a href="">수정하기</a>
+    <form action="" method="post" id="delete-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" id="delete-btn">삭제하기</button>
+    </form>
+    {% endif %}
+    
+    <hr>
+    
+</div>    
+<script>
+    document.getElementById('delete-form').addEventListener('submit', function(event) {
+        event.preventDefault();  // 폼의 기본 제출 동작 중단
+        
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            this.submit();  // 확인 시 폼 제출
+        }
+    });
+</script>
+{% endblock %}
