@@ -5,7 +5,7 @@
     <div class="pin_container">
         {% for pin in pin_list %}
         <div>
-            <a href="">
+            <a href="{% url 'pins:detail' pin_id=pin.pk %}">
                 <img src="{{ pin.image.url }}" alt="">
             </a>
         </div>
