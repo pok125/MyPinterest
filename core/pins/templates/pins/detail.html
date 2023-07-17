@@ -25,15 +25,14 @@
     
     <hr>
     
-    {% comment %}
-    {% if target_article.comment.all %}
-        {% for comment in target_article.comment.all %}
+    {% if comments %}
+        {% for comment in comments %}
             <p>{{ comment.content }}</p>
         {% endfor %}
     {% endif %}
         
-    {% include 'comment/create.html' with article=target_article %}
-    {% endcomment %}     
+    {% include 'comments/create.html' with pin_id=pin_id %}
+    
 </div>    
 <script>
     document.getElementById('delete-form').addEventListener('submit', function(event) {

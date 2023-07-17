@@ -11,6 +11,5 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     path('pins/', include('pins.urls')),
     path('pingroups/', include('pingroups.urls')),
-    path('projects/', include('projects.urls')),
-    path('subscriptions/', include('subscriptions.urls')),
+    path('comments/', include('comments.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
