@@ -117,3 +117,18 @@ class PinUpdateView(LoginRequiredMixin ,View):
         }
 
         return render(request, 'pins/update.html', context=context)
+
+
+### PinDelete
+class PinDeleteView(LoginRequiredMixin, View):
+    # 삭제요청
+    def post(self, request, pin_id):
+        user = request.user
+        pin = get_object_or_404(Pin, pk=pin_id)
+
+        if pin.writer != user:
+            return HttpResponseBadRequest()
+        
+        pin.delete()
+        
+        return redirect('pins:list')
