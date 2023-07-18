@@ -1,26 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    
-    {% if pingroup_list %}
-    <div class="pingroup_container">
-        
-        {% for pingroup in pingroup_list %}
-        <div style="display: block; text-align: center;">
-            <a href="{% url 'pingroups:detail' pingroup_id=pingroup.pk %}">
-                <img src="{{ pingroup.image.url }}" alt="" >
-            </a>
-            <p>{{ pingroup.title | truncatechars:8 }}</p>
-        </div>
-        {% endfor %} 
+<div class="pingroup-list-container">
+    <div class="pingroup-list">
+        {% if pingroup_list %}
+        {% include 'pingroups/pingroup_item.html' with pingroup_list=pingroup_list %}
+        {% else %}
+        <p class="text-center">게시된 글이 없습니다.</p>
+        {% endif %}
     </div>
-    <script src="{% static 'js/magic_grid.js' %}"></script>
-    {% else %}
-    <p style="text-align: center;">No PinGroup</p>
-    {% endif %}
-    <div style="text-align: center;">
+    <!-- 등록 버튼 -->
+    <div class="pin-create-btn text-center mb-4">
         <a href="{% url 'pingroups:create' %}" class="btn btn-dark rounded-pill col-6 mt-3">
-            프로젝트 생성
+            등록하기
         </a>
-    </div>   
+    </div>
+</div>
+<script src="{% static 'js/magic_grid.js' %}"></script>
 {% endblock %}

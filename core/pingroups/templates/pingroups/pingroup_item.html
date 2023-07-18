@@ -1,0 +1,17 @@
+<div class="magic-container">
+    {% for pingroup in pingroup_list %}
+    <div class="pingroup-item">
+        <a href="{% url 'pingroups:detail' pingroup_id=pingroup.pk %}">
+            <img src="{{ pingroup.image.url }}" alt="">
+        </a>
+        <div class="pingroup-item-content">
+            <div class="pingroup-title">
+                <p class="mb-0">{{ pingroup.title | truncatechars:10 }}</p>
+            </div>
+            <div class="pingroup-pin-count">
+                <p class="mb-0">pin: {{ 1 }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}  
+</div>
