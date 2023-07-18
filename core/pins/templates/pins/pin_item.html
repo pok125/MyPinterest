@@ -1,0 +1,18 @@
+<div class="magic-container">
+    {% for pin in pin_list %}
+    <div class="pin-item">
+        <a href="{% url 'pins:detail' pin_id=pin.pk %}">
+            <img src="{{ pin.image.url }}" alt="">
+        </a>
+        <div class="pin-item-content">
+            <div class="pin-title">
+                <p>{{ pin.title | truncatechars:18 }}</p>
+            </div>
+            <div class="pin-like-count">
+                <i class="bi bi-suit-heart-fill text-danger"></i>
+                <p>{{ pin.like_count }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}  
+</div>

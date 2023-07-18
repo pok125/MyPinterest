@@ -1,26 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    {% if pin_list %}
-    <div class="pin_container">
-        {% for pin in pin_list %}
-        <div>
-            <a href="{% url 'pins:detail' pin_id=pin.pk %}">
-                <img src="{{ pin.image.url }}" alt="">
-            </a>
-        </div>
-            
-        {% endfor %}
-        
-        <script src="{% static 'js/magic_grid.js' %}"></script>   
+<div class="pin-list-container">
+    <div class="pin-list">
+        {% if pin_list %}
+        {% include 'pins/pin_item.html' with pin_list=pin_list %}
+        {% else %}
+        <p class="text-center">게시된 글이 없습니다.</p>
+        {% endif %}
     </div>
-    {% else %}
-    <p>게시된 글이 없습니다.</p>
-    {% endif %}
-    <div style="text-align: center;">
+    <!-- 등록 버튼 -->
+    <div class="pin-create-btn text-center mb-4">
         <a href="{% url 'pins:create' %}" class="btn btn-dark rounded-pill col-6 mt-3">
             등록하기
         </a>
     </div>
-      
+</div>
+<script src="{% static 'js/magic_grid.js' %}"></script>
 {% endblock %}

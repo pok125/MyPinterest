@@ -17,3 +17,15 @@
         </div>
     </div>
 </div>
+
+<div class="magic-container">
+    {% for pin in pin_list %}
+    <div class="pin-item">
+        <a href="{% url 'pins:detail' pin_id=pin.pk %}">
+            <img src="{{ pin.image.url }}" alt="">
+        </a>
+    </div>
+        
+    {% endfor %}
+    
+</div>
