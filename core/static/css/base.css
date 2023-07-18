@@ -1,25 +1,17 @@
-.header {
-    text-align: center;
-    margin: 2rem 0;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.header-title, .footer-logo {
+main {
+    flex: 1;
+}
+
+.title-logo {
     font-family: 'Courgette', cursive;
     font-family: 'Dancing Script', cursive;
     font-family: 'Gamja Flower', cursive;
-}
-
-.footer {
-    text-align: center; 
-    margin-bottom: 2rem;
-}
-
-.footer-menu, .footer-logo {
-    margin-top: 1rem;
-}
-
-.footer-menu {
-    font-size: 0.9rem;
 }
 
 /* pin container */

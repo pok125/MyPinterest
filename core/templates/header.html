@@ -1,34 +1,9 @@
-<div class="header">
-    <h1 class="header-title">
-        MyPinterest
-    </h1>
-    <nav>
-        <a href="{% url 'pins:list' %}">
-            <span>Pin</span>
-        </a>
-
-         <a href="">
-            <span>MySubscriptions</span>
-        </a>
-
-        <a href="{% url 'pingroups:list' %}">
-            <span>MyPinGroup</span>
-        </a> 
-       
-        <a href="{% url 'users:join' %}">
-            <span>회원가입</span>
-        </a> 
-        {% if not user.is_authenticated %}
-            <a href="{% url 'users:login' %}">
-                <span>로그인</span>
-            </a>
-        {% else %}
-            <a href="{% url 'profiles:mypage' user_id=user.pk %}">
-                <span>MyPage</span>
-            </a>
-            <a href="{% url 'users:logout' %}">
-                <span>로그아웃</span>
-            </a>
-        {% endif %}
-    </nav>
-</div>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="title-logo display-4 fw-bolder">MyPinterest</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Create your own unique pins</p>
+        </div>
+    </div>
+</header>

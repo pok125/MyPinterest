@@ -292,6 +292,7 @@ let magicGrid = new MagicGrid({
     static: true,
     useMin: true
   });
+
 // script 실행은 끝났지만 이미지가 로드되는 시간이
 // 더 느려서 layout적용이 되지 않는 문제 발생
 // 문제 해결

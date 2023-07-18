@@ -1,0 +1,52 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="title-logo navbar-brand" href="">MyPinterest</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="">Home</a>
+                </li>
+                <!-- Pin -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pins:list' %}">Pin</a>
+                </li>
+                
+                {% if user.is_authenticated %}
+                <!-- MyLikePin -->
+                <li class="nav-item">
+                    <a class="nav-link" href="">MyLikePin</a>
+                </li>
+                <!-- MyPinGroup -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pingroups:list' %}">MyPinGroup</a>
+                </li>
+                {% endif %}
+            </ul>
+             <!-- 로그인, 로그아웃, 회원가입, mypage -->
+             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                {% if not user.is_authenticated %}
+                <!-- 회원가입 -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'users:join' %}">회원가입</a>
+                </li>
+                <!-- 로그인 -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'users:login' %}">로그인</a>
+                </li>
+                {% else %}
+                <!-- Mypage -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'profiles:mypage' user_id=user.pk %}">Mypage</a>
+                </li>
+                <!-- 로그아웃 -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'users:logout' %}">로그아웃</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
