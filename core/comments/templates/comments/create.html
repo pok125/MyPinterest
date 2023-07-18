@@ -1,15 +1,8 @@
-{% load bootstrap4 %}
-
-{% block content %}
-<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-    <form action="{% url 'comments:create' pin_id=pin_id %}" method="post">
-        {% csrf_token %}
-        <textarea name="content" id="content" cols="30" rows="10"></textarea>
-        {% if user.is_authenticated %}
-        <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="댓글달기">  
-        {% endif %}
-        
-    </form>
-</div>
-{% endblock %}
+<form  class="d-flex" action="{% url 'comments:create' pin_id=pin_id %}" method="post">
+    {% csrf_token %}
+    <textarea class="me-2" name="content" id="content" cols="50" rows="1"></textarea>
+    {% if user.is_authenticated %}
+    <input type="submit" class="btn btn-dark rounded-pill" value="댓글달기">  
+    {% endif %}
+</form>
     

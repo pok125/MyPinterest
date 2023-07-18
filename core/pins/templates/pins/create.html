@@ -2,8 +2,8 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-    <h2>Article Create</h2>
+<div class="pin-container">
+    <h2>Pin Create</h2>
     <form action="{% url 'pins:create' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}

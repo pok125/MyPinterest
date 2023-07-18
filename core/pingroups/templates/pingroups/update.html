@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
+<div class="pingroup-container">
     <h2 class="mb-4">Update PinGroup</h2>
     <form action="{% url 'pingroups:update' pingroup_id=pingroup_id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}

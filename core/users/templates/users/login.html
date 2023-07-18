@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<div style="text-align: center; max-width: 500px; margin: 4rem auto;">
+<div class="login-container">
     <h2 class="mb-4">로그인</h2>
     <form action="{% url 'users:login' %}" method="post">
         {% csrf_token %}
