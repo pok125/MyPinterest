@@ -59,12 +59,20 @@ class PinGroupDetailView(LoginRequiredMixin, View):
         if pingroup.user != user:
             return HttpResponseBadRequest()
         
+        # context = {
+        #     'pingroup_id': pingroup_id,
+        #     'pingroup_user_id': pingroup.user.pk,
+        #     'pingroup_title': pingroup.title,
+        #     'pingroup_image_url': pingroup.image.url,
+        #     'pingroup_content': pingroup.content
+        # }
+
+        pin_list = pingroup.pin.all()
+        pin_count = pin_list.count()
         context = {
-            'pingroup_id': pingroup_id,
-            'pingroup_user_id': pingroup.user.pk,
-            'pingroup_title': pingroup.title,
-            'pingroup_image_url': pingroup.image.url,
-            'pingroup_content': pingroup.content
+            'pingroup': pingroup,
+            'pin_count': pin_count,
+            'pin_list': pin_list
         }
 
         return render(request, 'pingroups/detail.html', context=context)

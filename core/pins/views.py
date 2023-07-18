@@ -58,15 +58,10 @@ class PinDetailView(View):
         pin = get_object_or_404(Pin, pk=pin_id)
         comments = pin.comment.all()
         context = {
-            'pin_id': pin_id,
-            'pin_writer_id': pin.writer.pk,
-            'pin_image_url': pin.image.url,
-            'pin_title': pin.title,
-            'pin_content': pin.content,
-            'pin_like_count': pin.like_count,
+            'pin': pin,
             'comments': comments
         }
-        
+
         return render(request, 'pins/detail.html', context=context)
 
 

@@ -3,20 +3,18 @@
 {% block content %}
 <div class="pingroup-container">
     <h2>
-    {{ pingroup_title }}
+    {{ pingroup.title }}
     </h2>
-    <p>등록된 pin 수: {{ 1 }}</p>
-    <img class="pingroup-detail-img" src="{{ pingroup_image_url }}" alt="">
+    <p>등록된 pin 수: {{ pin_count }}</p>
+    <img class="pingroup-detail-img" src="{{ pingroup.image.url }}" alt="">
     <p>
-        {{ pingroup_content }}
+        {{ pingroup.content}}
     </p>
-    
-    
 </div>    
 <!-- 수정, 삭제 버튼 -->
 <div class="d-flex">
-    <a class="btn btn-dark rounded-pill w-50" href="{% url 'pingroups:update' pingroup_id=pingroup_id %}">수정하기</a>
-    <form class="w-50" action="{% url 'pingroups:delete' pingroup_id=pingroup_id %}" method="post" id="delete-form">
+    <a class="btn btn-dark rounded-pill w-50" href="{% url 'pingroups:update' pingroup_id=pingroup.pk %}">수정하기</a>
+    <form class="w-50" action="{% url 'pingroups:delete' pingroup_id=pingroup.pk %}" method="post" id="delete-form">
         {% csrf_token %}
         <button type="submit" class="btn rounded-pill btn-danger w-100" id="delete-btn">삭제하기</button>
     </form>

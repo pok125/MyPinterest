@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <section class="">
     <div class="container px-2 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <!-- 이미지 -->
             <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0 rounded-3" src="{{ pin_image_url }}" alt="..." />
+                <img class="card-img-top mb-5 mb-md-0 rounded-3" src="{{ pin.image.url }}" alt="" />
             </div>
             <!-- 세부내용 -->
             <div class="col-md-6">
                 <!-- title -->
-                <h3 class="display-5 fw-bolder">{{ pin_title }}</h3>
+                <h3 class="display-5 fw-bolder">{{ pin.title }}</h3>
                 <!-- 좋아요, 즐겨찾기 -->
                 <div class="d-flex">
                     <div class="d-flex w-50">
                         <i class="bi bi-suit-heart-fill text-danger me-3"></i>
-                        <p class="">{{ pin_like_count }}</p>
+                        <p class="">{{ pin.like_count }}</p>
                     </div>
                     <div class="d-flex w-50">
                         <i class="bi bi-star me-3"></i>
@@ -26,12 +26,19 @@
                 <!-- 작성자 정보 -->
                 <div class="d-flex mb-3">
                     <!-- 유저 이미지 -->
-                    <a class="me-3" href="">
-                        <img class="pin-detail-writer-img" src="{{ pin_image_url }}" alt="">
+                    <a class="me-3" href="{% url 'profiles:mypage' user_id=pin.writer.pk %}">
+                        
+                        {% if pin.writer.prifile.image %}
+                        <img class="pin-detail-writer-img" src="{{ pin.writer.prifile.image.url }}" alt="">
+                        {% else %}
+                        <img class="pin-detail-writer-img" src="{% static 'image/default_profile.png' %}" alt="">
+                        {% endif %}
+                            
+                        
                     </a>
                     <!-- 유저정보 -->
                     <div class="mt-2">
-                        <p class="mb-1">유저 이름</p>
+                        <p class="mb-1">{{ pin.writer.username }}</p>
                         <p>팔로워 {{ pin_like_count }}</p>
                     </div>
                 </div>
@@ -53,17 +60,17 @@
                     </ul>
                 </div>
                 <!-- 댓글 달기 -->
-                {% include 'comments/create.html' with pin_id=pin_id %}
+                {% include 'comments/create.html' with pin_id=pin.pk %}
             </div>
         </div>
     </div>
 </section>
 
 <!-- 수정, 삭제 버튼 -->
-{% if pin_writer_id == request.user.pk %}
+{% if pin.writer == request.user %}
 <div class="d-flex">
-    <a class="btn btn-dark rounded-pill w-50" href="{% url 'pins:update' pin_id=pin_id %}">수정하기</a>
-    <form class="w-50" action="{% url 'pins:delete' pin_id=pin_id %}" method="post" id="delete-form">
+    <a class="btn btn-dark rounded-pill w-50" href="{% url 'pins:update' pin_id=pin.pk %}">수정하기</a>
+    <form class="w-50" action="{% url 'pins:delete' pin_id=pin.pk %}" method="post" id="delete-form">
         {% csrf_token %}
         <button type="submit" class="btn rounded-pill btn-danger w-100" id="delete-btn">삭제하기</button>
     </form>
