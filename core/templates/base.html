@@ -9,7 +9,7 @@
     {% include 'header.html' %}
     <!-- error message -->
     {% for message in messages %}
-        <div class="text-center">
+        <div class="message-box text-center">
             <div class="btn btn-{{ message.tags }}">
                 {{ message }}
             </div>

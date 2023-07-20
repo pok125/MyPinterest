@@ -131,3 +131,18 @@ body {
     border-radius: 1rem; 
     margin-bottom: 2rem;
 }
+
+.message-box {
+    animation: fadeOut 1s ease-in 1s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
