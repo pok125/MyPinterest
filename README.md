@@ -5,6 +5,11 @@
 * generic view를 이용하여 빠르게 전체적인 기능 구현 (SSR)
 * 일반 view로 전체코드 리팩토링 후 배포 (SSR)
 * DRF를 이용하여 REST API 구현
+## 개발환경
+
+## ERD
+![Untitled (4)](https://github.com/pok125/MyPinterest/assets/26684769/edd7e9cb-2ddd-407b-bb7f-6ce2b1840092)
+
 ## 구현 기능
 1. 회원가입
 
@@ -55,6 +60,4 @@
 ![pinlist_logout](https://github.com/pok125/MyPinterest/assets/26684769/bc235607-3df5-47c8-a59e-cf94bad789d1)
 ![pinlist_otheruser](https://github.com/pok125/MyPinterest/assets/26684769/a94d5b19-c62d-4e5b-aeb3-b96316f71751)
 
-## ERD
 
-![Untitled (5)](https://github.com/pok125/MyPinterest/assets/26684769/64bb88e7-0a2a-43c7-8806-8e3bf7ce57a7)
