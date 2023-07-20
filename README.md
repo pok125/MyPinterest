@@ -5,50 +5,55 @@
 * generic view를 이용하여 빠르게 전체적인 기능 구현 (SSR)
 * 일반 view로 전체코드 리팩토링 후 배포 (SSR)
 * DRF를 이용하여 REST API 구현
-## 기본 화면 구성 UI설계
-1. Home
+## 구현 기능
+1. 회원가입
 
-![home](https://github.com/pok125/MyPinterest/assets/26684769/6ea8d55d-1bd3-4dd4-9b88-7609c9b59e18)
+![join](https://github.com/pok125/MyPinterest/assets/26684769/b7a1cdef-6fab-4253-99d3-f6c184272de0)
 
-2. 로그인
 
-![login](https://github.com/pok125/MyPinterest/assets/26684769/01c081fb-d2fc-49c6-8c1d-b2c769fba485)
+2. 로그인, 로그아웃
 
-3. 회원가입
+![login](https://github.com/pok125/MyPinterest/assets/26684769/9b0cc9c4-f85a-49fe-827d-6e7cc2886db5)
+![logout](https://github.com/pok125/MyPinterest/assets/26684769/71f675b1-991f-4fc3-8d0d-75e8b56bfb72)
 
-![join](https://github.com/pok125/MyPinterest/assets/26684769/05a8acf1-0aa2-45c7-8001-6891005051a3)
+3. 회원정보 수정, 회원탈퇴
 
-4. Mypage
+![profile_update](https://github.com/pok125/MyPinterest/assets/26684769/27470fd4-407e-4073-9246-cdc8e9cc84ba)
+![user_delete](https://github.com/pok125/MyPinterest/assets/26684769/90ba2b82-fd07-46c3-82df-6b8c2eb05f33)
 
-![mypage](https://github.com/pok125/MyPinterest/assets/26684769/038eeaed-3379-423d-8e05-d519b6be26fb)
+4. PinGroup 생성, 수정, 삭제
+- pin 없을 때
 
-5. Mypage수정
+![pingroup_create](https://github.com/pok125/MyPinterest/assets/26684769/08b2e3c0-75a3-4608-a48a-8e68a3b784c6)
+![pingroup_update](https://github.com/pok125/MyPinterest/assets/26684769/60d3039a-7fc3-4ccc-963b-93deaf55cb57)
+![pingroup_delete](https://github.com/pok125/MyPinterest/assets/26684769/aff967a0-7b5f-4da0-872a-71196e09e051)
 
-![updatemypage](https://github.com/pok125/MyPinterest/assets/26684769/39787b35-0f9e-45d6-84b5-4eda094d5372)
+- pin 있을 때
 
-6. Pin리스트
+![pingroup_pinlist](https://github.com/pok125/MyPinterest/assets/26684769/95bab2e6-782f-439c-9012-16fcfa45fc36)
+![pingroup_and_pin_delete](https://github.com/pok125/MyPinterest/assets/26684769/772276b6-ee42-42ab-918d-8726b7507dbb)
 
-![pinlist](https://github.com/pok125/MyPinterest/assets/26684769/5fa8915d-abf3-4112-8b91-4bad7a86bda9)
+5. Pin 생성, 수정, 삭제
 
-7. Pin만들기
+![pin_creates](https://github.com/pok125/MyPinterest/assets/26684769/fdef417a-df60-4c22-b4d7-d530279e8a88)
+![pin_update](https://github.com/pok125/MyPinterest/assets/26684769/24bddb70-26e0-4bfc-9212-7a2083425b42)
+![pin_delete](https://github.com/pok125/MyPinterest/assets/26684769/068fb2e7-3cfe-41f8-8eef-097fb8d9d476)
 
-![createpin](https://github.com/pok125/MyPinterest/assets/26684769/0798cb01-863d-4aa6-9761-2117f4a666a1)
+- Pin 상세 페이지 이동 경로
+  1) Pin메뉴
+  2) PinGroup 상세페이지
 
-8. Pin상세보기
+![pindetail_from_pinlist](https://github.com/pok125/MyPinterest/assets/26684769/14939221-8cde-43b0-8043-f4d47b5ce4f6)
+![pindetail_from_pingroup](https://github.com/pok125/MyPinterest/assets/26684769/f6e4e1db-9b6b-4469-980a-8c2c6a71d39d)
 
-![pindetail](https://github.com/pok125/MyPinterest/assets/26684769/76515b01-68bb-4aa6-b34b-5ea99ba970ba)
+6. 댓글
 
-9. Pin즐겨찾기 리스트
+![comment](https://github.com/pok125/MyPinterest/assets/26684769/fb205339-b66b-45e4-a282-49d57127f1ab)
 
-![subscriplist](https://github.com/pok125/MyPinterest/assets/26684769/0b8e546e-4689-4c7c-b150-db173ce0e63e)
+7. 로그인, 미로그인 유저
 
-10. PinGroup리스트
-
-![grouplist](https://github.com/pok125/MyPinterest/assets/26684769/4354438f-b827-4182-abc5-5d5384773e1c)
-
-11. Group만들기
-
-![creategroup](https://github.com/pok125/MyPinterest/assets/26684769/97c3e2d6-01ad-401c-b010-f5ae61dfd51f)
+![pinlist_logout](https://github.com/pok125/MyPinterest/assets/26684769/bc235607-3df5-47c8-a59e-cf94bad789d1)
+![pinlist_otheruser](https://github.com/pok125/MyPinterest/assets/26684769/a94d5b19-c62d-4e5b-aeb3-b96316f71751)
 
 ## ERD
 
