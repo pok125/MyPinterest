@@ -1,10 +1,14 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth import login, authenticate, logout
+from django.http import HttpResponseBadRequest
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
 from .forms import JoinForm, LoginForm
 from profiles.models import Profile
 
+User = get_user_model()
 
 ### Join
 class JoinView(View):
@@ -96,3 +100,18 @@ class LogoutView(View):
         logout(request)
         
         return redirect('/')
+
+
+### UserDelete
+class UserDeleteView(LoginRequiredMixin, View):
+    # 회원탈퇴 요청
+    def post(self, request, user_id):
+        user = request.user
+        target_user = get_object_or_404(User, pk=user_id)
+
+        if user != target_user:
+            return HttpResponseBadRequest()
+        
+        target_user.delete()
+
+        return redirect('home')

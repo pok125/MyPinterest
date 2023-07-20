@@ -22,10 +22,24 @@
     </p>
     
     {% if target_user_id == request.user.pk %}
-        <a href="{% url 'profiles:update' profile_id=request.user.profile.pk %}">수정하기</a>
-        <a href="">회원탈퇴</a>
+        <div class="d-flex">
+            <a class="btn btn-dark rounded-pill w-50" href="{% url 'profiles:update' profile_id=request.user.profile.pk %}">수정하기</a>
+            <form class="w-50" action="{% url 'users:delete' user_id=target_user_id %}" method="post" id="delete-form">
+                {% csrf_token %}
+                <button type="submit" class="btn rounded-pill btn-danger w-100" id="delete-btn">회원탈퇴</button>
+            </form>
+        </div>  
     {% endif %}
-
 </div>   
-<hr>  
+<hr>
+
+<script>
+    document.getElementById('delete-form').addEventListener('submit', function(event) {
+        event.preventDefault();  // 폼의 기본 제출 동작 중단
+        
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            this.submit();  // 확인 시 폼 제출
+        }
+    });
+</script>
 {% endblock %}
