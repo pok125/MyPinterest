@@ -6,7 +6,15 @@
 * 일반 view로 전체코드 리팩토링 후 배포 (SSR)
 * DRF를 이용하여 REST API 구현
 ## 개발환경
-
+* Python 3.11.3
+* asgiref 3.7.2
+* beautifulsoup4 4.12.2
+* Django 4.2.1
+* django-bootstrap4 23.2
+* Pillow 10.0.0
+* python-decouple 3.8
+* soupsieve 2.4.1
+* sqlparse 0.4.4
 ## ERD
 ![Untitled (4)](https://github.com/pok125/MyPinterest/assets/26684769/edd7e9cb-2ddd-407b-bb7f-6ce2b1840092)
 
@@ -14,7 +22,6 @@
 1. 회원가입
 
 ![join](https://github.com/pok125/MyPinterest/assets/26684769/b7a1cdef-6fab-4253-99d3-f6c184272de0)
-
 
 2. 로그인, 로그아웃
 
@@ -59,5 +66,3 @@
 
 ![pinlist_logout](https://github.com/pok125/MyPinterest/assets/26684769/bc235607-3df5-47c8-a59e-cf94bad789d1)
 ![pinlist_otheruser](https://github.com/pok125/MyPinterest/assets/26684769/a94d5b19-c62d-4e5b-aeb3-b96316f71751)
-
-
