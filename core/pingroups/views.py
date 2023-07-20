@@ -11,7 +11,8 @@ from .forms import PinGroupCreationForm
 class PinGroupListView(LoginRequiredMixin, View):
     # PinGroup 페이지
     def get(self, request):
-        pingroups = PinGroup.objects.all()
+        user = request.user
+        pingroups = PinGroup.objects.filter(user=user)
         context = {
             'pingroup_list': pingroups
         }
