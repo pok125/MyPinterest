@@ -5,7 +5,7 @@ from django.conf import settings
 from .views import Home
 
 urlpatterns = [
-    path('', Home.as_view()),
+    path('', Home.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('profiles/', include('profiles.urls')),
