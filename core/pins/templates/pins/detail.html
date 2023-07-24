@@ -15,7 +15,9 @@
                 <!-- 좋아요, 즐겨찾기 -->
                 <div class="d-flex">
                     <div class="d-flex w-50">
-                        <i class="bi bi-suit-heart-fill text-danger me-3"></i>
+                        <a href="{% url 'pins:like' pin_id=pin.pk %}">
+                            <i class="bi bi-suit-heart-fill text-danger me-3"></i>
+                        </a>
                         <p class="">{{ pin.like_count }}</p>
                     </div>
                     <div class="d-flex w-50">

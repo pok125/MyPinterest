@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseBadRequest
 from .forms import PinCreationForm
-from .models import Pin
+from .models import LikeRecord, Pin
 
 
 ### PinList
@@ -129,3 +129,23 @@ class PinDeleteView(LoginRequiredMixin, View):
         pin.delete()
         
         return redirect('pins:list')
+    
+
+class LikeView(LoginRequiredMixin, View):
+    # 좋아요 요청
+    def get(self, request, pin_id):
+        user = request.user
+        pin = get_object_or_404(Pin, pk=pin_id)
+        like_record = LikeRecord.objects.filter(user=user, pin=pin)
+
+        # 이미 존재하면 좋아요 취소
+        if like_record.exists():
+            like_record.delete()
+            pin.like_count -= 1
+            pin.save()
+        else:
+            LikeRecord.objects.create(user=user, pin=pin)
+            pin.like_count += 1
+            pin.save()
+
+        return redirect('pins:detail', pin_id=pin_id)
