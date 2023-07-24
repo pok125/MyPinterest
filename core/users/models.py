@@ -48,3 +48,12 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+
+class FollowRecord(models.Model):
+    following_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following_user')
+    followed_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followed_user')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('following_user', 'followed_user')
