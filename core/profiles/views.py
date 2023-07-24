@@ -15,12 +15,9 @@ class ProfileView(View):
     # mypage
     def get(self, request, user_id):
         profile = get_object_or_404(Profile, user_id=user_id)
-        profile_image_url = profile.image.url if profile.image else ''
         context = {
-            'target_user_id': user_id,
-            'target_user_profile_image_url': profile_image_url,
-            'target_user_username': profile.user.username,
-            'target_user_profile_message': profile.message
+            'target_user': profile.user,
+            'profile': profile
         }
 
         return render(request, 'profiles/mypage.html', context=context)

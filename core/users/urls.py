@@ -8,4 +8,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('delete/<int:user_id>', UserDeleteView.as_view(), name='delete'),
+    path('following/<int:user_id>', FollowingView.as_view(), name='following'),
+    path('unfollowing/<int:user_id>', UnFollowingView.as_view(), name='unfollowing'),
 ]

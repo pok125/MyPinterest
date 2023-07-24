@@ -5,6 +5,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponseBadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+
+from .models import FollowRecord
 from .forms import JoinForm, LoginForm
 from profiles.models import Profile
 
@@ -115,3 +117,27 @@ class UserDeleteView(LoginRequiredMixin, View):
         target_user.delete()
 
         return redirect('home')
+
+
+### Following
+class FollowingView(LoginRequiredMixin, View):
+    # 팔로우 요청
+    def get(self, request, user_id):
+        user = request.user
+        target_user = get_object_or_404(User, pk=user_id)
+        FollowRecord.objects.create(following_user=user, followed_user=target_user) 
+        
+        return redirect('profiles:mypage', user_id=target_user.pk)
+
+
+class UnFollowingView(LoginRequiredMixin, View):
+    # 팔로우 취소
+    def get(self, request, user_id):
+        user = request.user
+        target_user = get_object_or_404(User, pk=user_id)
+        follow_record = FollowRecord.objects.filter(following_user=user, followed_user=target_user)
+
+        if follow_record.exists():
+            follow_record.delete()
+
+        return redirect('profiles:mypage', user_id=target_user.pk)
