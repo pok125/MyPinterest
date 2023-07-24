@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseBadRequest
 from .forms import PinCreationForm
-from .models import LikeRecord, Pin
+from .models import BookMark, LikeRecord, Pin
 
 
 ### PinList
@@ -147,5 +147,21 @@ class LikeView(LoginRequiredMixin, View):
             LikeRecord.objects.create(user=user, pin=pin)
             pin.like_count += 1
             pin.save()
+
+        return redirect('pins:detail', pin_id=pin_id)
+
+
+class BookMarkView(LoginRequiredMixin, View):
+    # 즐겨찾기 요청
+    def get(self, request, pin_id):
+        user = request.user
+        pin = get_object_or_404(Pin, pk=pin_id)
+        book_mark = BookMark.objects.filter(user=user, pin=pin)
+
+        # 이미 존재하면 즐겨찾기 취소
+        if book_mark.exists():
+            book_mark.delete()
+        else:
+            BookMark.objects.create(user=user, pin=pin)
 
         return redirect('pins:detail', pin_id=pin_id)

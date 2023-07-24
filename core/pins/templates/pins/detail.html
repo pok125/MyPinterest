@@ -21,8 +21,10 @@
                         <p class="">{{ pin.like_count }}</p>
                     </div>
                     <div class="d-flex w-50">
-                        <i class="bi bi-star me-3"></i>
-                        <p>0</p>
+                        <a href="{% url 'pins:bookmark' pin_id=pin.pk%}">
+                            <i class="bi bi-star me-3"></i>
+                        </a>
+                        <p>{{ pin.book_mark.count }}</p>
                     </div>
                 </div>
                 <!-- 작성자 정보 -->
