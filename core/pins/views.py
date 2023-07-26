@@ -56,10 +56,12 @@ class PinDetailView(View):
     # Pin상세 페이지
     def get(self, request, pin_id):
         pin = get_object_or_404(Pin, pk=pin_id)
+        writer_following_count = pin.writer.followed_user.all().count()
         comments = pin.comment.all()
         context = {
             'pin': pin,
-            'comments': comments
+            'comments': comments,
+            'writer_following_count':writer_following_count
         }
 
         return render(request, 'pins/detail.html', context=context)
