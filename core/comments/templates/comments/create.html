@@ -2,7 +2,7 @@
     {% csrf_token %}
     <textarea class="me-2" name="content" id="content" cols="50" rows="1"></textarea>
     {% if user.is_authenticated %}
-    <input type="submit" class="btn btn-dark rounded-pill" value="댓글달기">  
+    <input type="submit" class="btn btn-dark rounded-pill" value="댓글달기">
     {% endif %}
 </form>
     

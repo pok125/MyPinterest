@@ -43,7 +43,7 @@ class CommentCreateView(LoginRequiredMixin ,View):
 ### CommentDelete
 class CommentDeleteView(LoginRequiredMixin, View):
     # 삭제 요청
-    def post(self, request, comment_id):
+    def get(self, request, comment_id):
         comment = get_object_or_404(Comment, pk=comment_id)
         user = request.user
 

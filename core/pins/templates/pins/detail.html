@@ -59,7 +59,16 @@
                     <ul>
                         {% if comments %}
                             {% for comment in comments %}
-                                <li>{{ comment.content }}</li>
+                                <li>
+                                    {{ comment.content }}
+                                    
+                                    {% if user.is_authenticated and comment.writer == user %}
+                                    <a href="{% url 'comments:delete' comment_id=comment.pk %}">
+                                        <i class="bi bi-x-square"></i>
+                                    </a>
+                                    {% endif %}
+                                </li>
+                                
                             {% endfor %}
                         {% endif %}
                     </ul>
