@@ -32,8 +32,8 @@
                     <!-- 유저 이미지 -->
                     <a class="me-3" href="{% url 'profiles:mypage' user_id=pin.writer.pk %}">
                         
-                        {% if pin.writer.prifile.image %}
-                        <img class="pin-detail-writer-img" src="{{ pin.writer.prifile.image.url }}" alt="">
+                        {% if pin.writer.profile.image %}
+                        <img class="pin-detail-writer-img" src="{{ pin.writer.profile.image.url }}" alt="">
                         {% else %}
                         <img class="pin-detail-writer-img" src="{% static 'image/default_profile.png' %}" alt="">
                         {% endif %}
