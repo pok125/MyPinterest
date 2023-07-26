@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="pin-list-container">
+    <div class="pin-list">
+        {% if pin_list %}
+        {% include 'pins/pin_item.html' with pin_list=pin_list %}
+        {% else %}
+        <p class="text-center">즐겨찾기한 Pin이 없습니다.</p>
+        {% endif %}
+    </div>
+</div>
+<script src="{% static 'js/magic_grid.js' %}"></script>
+{% endblock %}

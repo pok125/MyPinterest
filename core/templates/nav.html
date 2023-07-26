@@ -9,15 +9,15 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                 </li>
-                <!-- Pin -->
+                <!-- PinList -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'pins:list' %}">Pin</a>
+                    <a class="nav-link" href="{% url 'pins:list' %}">PinList</a>
                 </li>
                 
                 {% if user.is_authenticated %}
-                <!-- MyLikePin -->
+                <!-- BookMarkPin -->
                 <li class="nav-item">
-                    <a class="nav-link" href="">MyLikePin</a>
+                    <a class="nav-link" href="{% url 'pins:bookmark_list' %}">BookMarkPin</a>
                 </li>
                 <!-- MyPinGroup -->
                 <li class="nav-item">

@@ -165,3 +165,17 @@ class BookMarkView(LoginRequiredMixin, View):
             BookMark.objects.create(user=user, pin=pin)
 
         return redirect('pins:detail', pin_id=pin_id)
+
+
+### BookMarkList
+class BookMarkListView(LoginRequiredMixin, View):
+    # bookmark리스트 페이지
+    def get(self, request):
+        user = request.user
+        bookmarks = BookMark.objects.filter(user=user)
+        pins = [bookmark.pin for bookmark in bookmarks]
+        context = {
+            'pin_list': pins
+        }
+        
+        return render(request, 'pins/bookmark_list.html', context=context)
