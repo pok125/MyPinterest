@@ -23,7 +23,9 @@
             {{ profile.message }}
         {% endif %}
     </p>
-    
+    <p>
+        등록한 pin: {{ pin_count }} | 팔로우: {{ following_count }}
+    </p>
     {% if target_user == request.user %}
         <div class="d-flex">
             <a class="btn btn-dark rounded-pill w-50" href="{% url 'profiles:update' profile_id=profile.pk %}">수정하기</a>
@@ -36,7 +38,7 @@
         
         {% if user.is_authenticated %}
 
-            {% if target_user.following_user == user %}
+            {% if is_following %}
                 <a class="btn btn-danger rounded-pill w-50" href="{% url 'users:unfollowing' user_id=target_user.pk %}">팔로우 취소</a>
             {% else %}
                 <a class="btn btn-dark rounded-pill w-50" href="{% url 'users:following' user_id=target_user.pk %}">팔로우</a>

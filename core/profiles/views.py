@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.http import HttpResponseBadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from users.models import FollowRecord
 from .models import Profile
 from .forms import ProfileForm
 
@@ -15,9 +17,22 @@ class ProfileView(View):
     # mypage
     def get(self, request, user_id):
         profile = get_object_or_404(Profile, user_id=user_id)
+        target_user = profile.user
+        user = request.user
+        is_following = False
+        
+        if user.is_authenticated:
+            is_following = FollowRecord.objects.filter(following_user=user, followed_user=target_user).exists()
+            
+        pin_count = target_user.pin.count()
+        following_count = target_user.followed_user.all().count()
+        
         context = {
-            'target_user': profile.user,
-            'profile': profile
+            'target_user': target_user,
+            'profile': profile,
+            'pin_count': pin_count,
+            'following_count': following_count,
+            'is_following': is_following
         }
 
         return render(request, 'profiles/mypage.html', context=context)
