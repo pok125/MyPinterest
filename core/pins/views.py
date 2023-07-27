@@ -3,6 +3,8 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseBadRequest
+from django.core.exceptions import ObjectDoesNotExist
+from comments.models import Comment
 from .forms import PinCreationForm
 from .models import BookMark, LikeRecord, Pin
 
@@ -55,9 +57,15 @@ class PinCreateView(LoginRequiredMixin, View):
 class PinDetailView(View):
     # Pin상세 페이지
     def get(self, request, pin_id):
-        pin = get_object_or_404(Pin, pk=pin_id)
+        try:
+            pin = Pin.objects.select_related('writer').get(pk=pin_id)
+        except ObjectDoesNotExist as e:
+            messages.add_message(request, messages.ERROR, '존재하지 않는 pin입니다.')
+        
+            return redirect('pins:list')
+        
         writer_following_count = pin.writer.followed_user.all().count()
-        comments = pin.comment.all()
+        comments = Comment.objects.select_related('pin', 'writer').filter(pin__id=pin_id)
         context = {
             'pin': pin,
             'comments': comments,
@@ -174,7 +182,7 @@ class BookMarkListView(LoginRequiredMixin, View):
     # bookmark리스트 페이지
     def get(self, request):
         user = request.user
-        bookmarks = BookMark.objects.filter(user=user)
+        bookmarks = BookMark.objects.select_related('pin', 'user').filter(user=user)
         pins = [bookmark.pin for bookmark in bookmarks]
         context = {
             'pin_list': pins

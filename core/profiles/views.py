@@ -1,12 +1,10 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.urls import reverse_lazy
 from django.views import View
 from django.http import HttpResponseBadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Prefetch
 from users.models import FollowRecord
 from .models import Profile
 from .forms import ProfileForm
