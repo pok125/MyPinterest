@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.http import HttpResponseBadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Prefetch
 from users.models import FollowRecord
 from .models import Profile
 from .forms import ProfileForm
@@ -16,14 +17,20 @@ User = get_user_model()
 class ProfileView(View):
     # mypage
     def get(self, request, user_id):
-        profile = get_object_or_404(Profile, user_id=user_id)
+        try:
+            profile = Profile.objects.select_related('user').get(user__id=user_id)
+        except ObjectDoesNotExist as e:
+            messages.add_message(request, messages.ERROR, "존재하지 않는 유저입니다.")
+
+            return redirect('/')
+        
         target_user = profile.user
         user = request.user
         is_following = False
         
         if user.is_authenticated:
             is_following = FollowRecord.objects.filter(following_user=user, followed_user=target_user).exists()
-            
+        
         pin_count = target_user.pin.count()
         following_count = target_user.followed_user.all().count()
         
@@ -51,7 +58,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
     def get(self, request, profile_id):
         user = request.user
         profile = get_object_or_404(Profile, pk=profile_id)
-
+        
         # 로그인하지 않은 유저, 요청한 유저와 수정할 유저 객체가 다를 경우
         if not user.is_authenticated or user != profile.user:
             return HttpResponseBadRequest()

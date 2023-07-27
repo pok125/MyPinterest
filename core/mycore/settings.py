@@ -14,7 +14,7 @@ import os, json, sys
 from pathlib import Path
 from django.urls import reverse
 from django.contrib.messages import constants as messages
-
+import logging
 # UserModel
 AUTH_USER_MODEL = 'users.User'
 
@@ -157,4 +157,94 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     messages.SUCCESS: 'success',
+}
+
+class SQLFormatter(logging.Formatter):
+    def format(self, record):
+        # Check if Pygments is available for coloring
+        try:
+            import pygments
+            from pygments.formatters import TerminalTrueColorFormatter
+            from pygments.lexers import SqlLexer
+        except ImportError:
+            pygments = None
+
+        # Check if sqlparse is available for indentation
+        try:
+            import sqlparse
+        except ImportError:
+            sqlparse = None
+
+        # Remove leading and trailing whitespaces
+        sql = record.sql.strip()  # type: ignore
+
+        if sqlparse:
+            # Indent the SQL query
+            sql = sqlparse.format(sql, reindent=True)
+
+        if pygments:
+            # Highlight the SQL query
+            sql = pygments.highlight(
+                sql,
+                SqlLexer(),  # type: ignore
+                # TerminalTrueColorFormatter(style='monokai')
+                TerminalTrueColorFormatter(),  # type: ignore
+            )
+
+        # Set the records statement to the formatted query
+        record.statement = sql
+        return super(SQLFormatter, self).format(record)
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "formatters": {
+        "django_server_formatter": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{asctime}] {message}",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "style": "{",
+        },
+        "standard_formatter": {
+            "format": "[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "sql_formatter": {
+            "()": SQLFormatter,
+            "format": "\n[%(asctime)s] [%(duration).3f] \n %(statement)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    "handlers": {
+        "django_server_handler": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "standard_formatter",
+        },
+        "sql_handler": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "sql_formatter",
+        },
+    },
+    "loggers": {
+        "django.db.backends": {
+            "handlers": ["sql_handler"],
+            "level": "DEBUG",
+        },
+        "django.server": {
+            "handlers": ["django_server_handler"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
 }

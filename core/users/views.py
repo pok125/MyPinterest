@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponseBadRequest
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from .models import FollowRecord
 from .forms import JoinForm, LoginForm
 from profiles.models import Profile
@@ -37,8 +37,13 @@ class JoinView(View):
         
         # form 유효성 검사
         if form.is_valid():
-            user = form.save()
-            Profile.objects.create(user=user)
+            try:
+                user = form.save()
+                Profile.objects.create(user=user)
+            except ObjectDoesNotExist as e:
+                print('User does not exist', str(e))
+            except ValidationError as e:
+                print('Validation error occurred', str(e))
 
             return redirect('users:login')
         
@@ -125,7 +130,7 @@ class FollowingView(LoginRequiredMixin, View):
     def get(self, request, user_id):
         user = request.user
         target_user = get_object_or_404(User, pk=user_id)
-        FollowRecord.objects.create(following_user=user, followed_user=target_user) 
+        FollowRecord.objects.get_or_create(following_user=user, followed_user=target_user) 
         
         return redirect('profiles:mypage', user_id=target_user.pk)
 
@@ -136,8 +141,8 @@ class UnFollowingView(LoginRequiredMixin, View):
         user = request.user
         target_user = get_object_or_404(User, pk=user_id)
         follow_record = FollowRecord.objects.filter(following_user=user, followed_user=target_user)
-
+        
         if follow_record.exists():
             follow_record.delete()
-
+    
         return redirect('profiles:mypage', user_id=target_user.pk)
