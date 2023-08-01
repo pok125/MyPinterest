@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseBadRequest
+from django.db.models import Count
 from .models import PinGroup
 from .forms import PinGroupCreationForm
 
@@ -12,7 +13,7 @@ class PinGroupListView(LoginRequiredMixin, View):
     # PinGroup 페이지
     def get(self, request):
         user = request.user
-        pingroups = PinGroup.objects.filter(user=user)
+        pingroups = PinGroup.objects.filter(user=user).annotate(pin_count=Count('pin'))
         context = {
             'pingroup_list': pingroups
         }
