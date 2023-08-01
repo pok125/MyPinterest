@@ -12,6 +12,7 @@ from .forms import ProfileForm
 User = get_user_model()
 
 
+### MyPage
 class ProfileView(View):
     # mypage
     def get(self, request, user_id):
@@ -43,6 +44,7 @@ class ProfileView(View):
         return render(request, 'profiles/mypage.html', context=context)
     
 
+### ProfileUpdate
 class ProfileUpdateView(LoginRequiredMixin, View):
     # form에 대한 초기 값 세팅을 위해 initial객체 사용
     def get_initial(self, profile):

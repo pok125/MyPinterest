@@ -135,6 +135,7 @@ class FollowingView(LoginRequiredMixin, View):
         return redirect('profiles:mypage', user_id=target_user.pk)
 
 
+### UnFollowing
 class UnFollowingView(LoginRequiredMixin, View):
     # 팔로우 취소
     def get(self, request, user_id):

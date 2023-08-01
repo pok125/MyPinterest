@@ -141,6 +141,7 @@ class PinDeleteView(LoginRequiredMixin, View):
         return redirect('pins:list')
     
 
+### Like
 class LikeView(LoginRequiredMixin, View):
     # 좋아요 요청
     def get(self, request, pin_id):
@@ -161,6 +162,7 @@ class LikeView(LoginRequiredMixin, View):
         return redirect('pins:detail', pin_id=pin_id)
 
 
+### BookMark
 class BookMarkView(LoginRequiredMixin, View):
     # 즐겨찾기 요청
     def get(self, request, pin_id):
