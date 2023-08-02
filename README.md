@@ -116,11 +116,17 @@
 ![pindetail_from_pinlist](https://github.com/pok125/MyPinterest/assets/26684769/14939221-8cde-43b0-8043-f4d47b5ce4f6)
 ![pindetail_from_pingroup](https://github.com/pok125/MyPinterest/assets/26684769/f6e4e1db-9b6b-4469-980a-8c2c6a71d39d)
 
-6. 댓글
+6. 댓글 생성, 삭제
 
-![comment](https://github.com/pok125/MyPinterest/assets/26684769/fb205339-b66b-45e4-a282-49d57127f1ab)
+![comment_create_delete](https://github.com/pok125/MyPinterest/assets/26684769/e0cbe09f-9384-449e-851f-a30f39df761e)
 
-7. 로그인, 미로그인 유저
+7. 좋아요, 즐겨찾기, 팔로우
+
+![like](https://github.com/pok125/MyPinterest/assets/26684769/782d0fba-c3b2-4b5d-b3fb-9fc60b19f796)
+![bookmark](https://github.com/pok125/MyPinterest/assets/26684769/7ce87bf3-da72-4884-afe7-48d493d2c4fb)
+![following](https://github.com/pok125/MyPinterest/assets/26684769/a75a4d80-a0bc-4f0a-beee-5d4635ab0f5d)
+
+8. 로그인, 미로그인 유저
 
 ![pinlist_logout](https://github.com/pok125/MyPinterest/assets/26684769/bc235607-3df5-47c8-a59e-cf94bad789d1)
 ![pinlist_otheruser](https://github.com/pok125/MyPinterest/assets/26684769/a94d5b19-c62d-4e5b-aeb3-b96316f71751)
