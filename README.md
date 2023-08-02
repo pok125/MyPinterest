@@ -82,15 +82,27 @@
 
 ![join](https://github.com/pok125/MyPinterest/assets/26684769/b7a1cdef-6fab-4253-99d3-f6c184272de0)
 
+* AbstractUser를 상속받아 User모델을 커스텀하여 사용하였습니다.
+* username이 아닌 email을 id값으로 변경하였습니다.
+* UserCreationForm을 상속받아 해당 form으로 유효성 검사와 화면 구성을 하였습니다.
+* 회원가입 시, user모델과 profile모델에 값이 저장됩니다. profile의 이미지의 경우 초기 빈 값으로 프론트에서 빈 값인 경우 static파일에서 image를 불러오도록 처리하였습니다.
+
 2. 로그인, 로그아웃
 
 ![login](https://github.com/pok125/MyPinterest/assets/26684769/9b0cc9c4-f85a-49fe-827d-6e7cc2886db5)
 ![logout](https://github.com/pok125/MyPinterest/assets/26684769/71f675b1-991f-4fc3-8d0d-75e8b56bfb72)
 
+* django auth에서 제공하는 login, authenticate, logout을 사용하였습니다.
+
 3. 회원정보 수정, 회원탈퇴
 
 ![profile_update](https://github.com/pok125/MyPinterest/assets/26684769/27470fd4-407e-4073-9246-cdc8e9cc84ba)
 ![user_delete](https://github.com/pok125/MyPinterest/assets/26684769/90ba2b82-fd07-46c3-82df-6b8c2eb05f33)
+
+* 해당 페이지는 로그인 유저, 비로그인 유저 다 접근 가능합니다.
+* 로그인 유저: 해당 페이지의 유저와 동일한 유저인 경우 수정, 탈퇴 버튼이 활성화되고 다른 유저인 경우 팔로우 버튼이 활성화 됩니다.
+* 비로그인 유저: 페이지 정보만 볼 수 있고 모든 버튼이 비활성화 됩니다.
+* 수정과 탈퇴 요청인 경우, LoginRequiredMixin을 사용하여 비로그인 유저 처리를 하였고 요청을 보낸 유저와 탈퇴 시킬 유저가 동일하지 않다면 HttpResponseBadRequest로 처리하였습니다.
 
 4. PinGroup 생성, 수정, 삭제
 - pin 없을 때
@@ -104,6 +116,10 @@
 ![pingroup_pinlist](https://github.com/pok125/MyPinterest/assets/26684769/95bab2e6-782f-439c-9012-16fcfa45fc36)
 ![pingroup_and_pin_delete](https://github.com/pok125/MyPinterest/assets/26684769/772276b6-ee42-42ab-918d-8726b7507dbb)
 
+* pin을 생성하려면 pingroup을 선택하도록 Pin모델에 PinGroup을 ForeignKey로 설정 후 null=False 옵션을 두어 처리하였습니다.
+* pingroup에 등록된 pin의 수를 모든 pingroup에 대해 pin들을 역참조로 조회 시 쿼리문이 계속 발생하는 N+1 문제를 발견하였습니다. 따라서 annotate와 Count를 이용하여 쿼리문을 한 번 호출하는 것으로 
+문제를 해결하였습니다.
+  
 5. Pin 생성, 수정, 삭제
 
 ![pin_creates](https://github.com/pok125/MyPinterest/assets/26684769/fdef417a-df60-4c22-b4d7-d530279e8a88)
@@ -115,6 +131,9 @@
 
 ![pindetail_from_pinlist](https://github.com/pok125/MyPinterest/assets/26684769/14939221-8cde-43b0-8043-f4d47b5ce4f6)
 ![pindetail_from_pingroup](https://github.com/pok125/MyPinterest/assets/26684769/f6e4e1db-9b6b-4469-980a-8c2c6a71d39d)
+
+* magic grid 오픈 소스를 이용하여 pin리스트 화면 구성을 하였습니다.
+* 상세페이지에서 댓글에 대한 정보들을 가져올 때, N+1 문제를 발견하였습니다. select_related를 통해 정참조 join 쿼리를 통해 쿼리문을 한 번 호출하는 것으로 문제를 해결하였습니다.
 
 6. 댓글 생성, 삭제
 
@@ -130,3 +149,34 @@
 
 ![pinlist_logout](https://github.com/pok125/MyPinterest/assets/26684769/bc235607-3df5-47c8-a59e-cf94bad789d1)
 ![pinlist_otheruser](https://github.com/pok125/MyPinterest/assets/26684769/a94d5b19-c62d-4e5b-aeb3-b96316f71751)
+
+## 어려웠던 점
+1. User모델 커스텀
+  * 기본으로 제공되는 User모델에서 id를 username대신 email을 사용하고자 커스텀을 진행하였습니다. AbstractUser를 상속받아 User모델을 재정의하는 과정에서
+username을 처리하는 과정에서 어려움을 겪었습니다. 이 과정에서 AbstractUser모델을 상속받아 커스텀 하려하면 User모델 뿐만아니라 UserManager class 또한 수정해야 한다는 것을 알게되었습니다.
+또한 username을 명시하지 않아도 계속 기존 auth의 authenticate인증을 사용하려다 보니 email대신 username으로 처리되어 계속 인증에 실패하였습니다. 따라서 settings파일에
+    
+    ```
+    ACCOUNT_UNIQUE_EMAIL = True
+    ACCOUNT_AUTHENTICATION_METHOD = 'email'
+    ACCOUNT_USERNAME_REQUIRED = False
+    ```
+    username대신 email을 쓰겠다는 것을 명시하여 해결하였습니다.
+
+2. Django ORM 이해
+  * 쿼리셋에 대해 실질적인 쿼리가 어떻게 수행되는지 알아보기 위해 logging과 pygments을 사용하였습니다. 실질적으로 쿼리문이 찍히는 것을 보니 기존에 생각하고 있던 실행 시점과 동작 방식이 전혀 다르다는 것을 알 수 있었습니다.
+  ```
+  a = 모델.objects.all()
+  b = a[0]
+  c = list(a)
+  ```
+위의 코드에서 all을 했을 때 db에서 모든 데이터를 가져오는 줄 알았지만 실질적으로 사용을 할 때 쿼리문이 동작하는 것을 알 수 있었습니다. 또한, b와 c 위의 코드에서 b,c 에서 두 번의 쿼리가 발생하게 됩니다. 하지만 c, b를 위치를 바꾸게 되면 
+쿼리문은 c에서 한 번 발생합니다. 따라서 쿼리를 통해 가져온 데이터가 캐싱된다는 것을 확인 할 수 있었습니다. 이러한 이해를 토대로 작성했었던 코드들을 살펴보았고 N+1 쿼리가 발생하는 부분들을 발견하였고 annotate와 select_related를 이용하여
+해결하였습니다. 그 밖에도 사용할 수 있는 함수들이 많이 있다는 것도 알게 되었습니다. 데이터가 적기 때문에 복잡한 쿼리문으로 쿼리 발생 빈도를 줄이는 것과 단순한 쿼리 여러번으로 처리하는 것에 대해 시간차이는 경험할 수 없었지만 장고의 쿼리 동작에 대해
+이해할 수 있었습니다.
+
+3. Docker를 이용한 배포
+   
+ 
+## 프로젝트를 마치며
+
