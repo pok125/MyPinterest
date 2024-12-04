@@ -11,7 +11,6 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-
         return user
 
     def create_user(self, email, password, **extra_fields):
@@ -20,7 +19,6 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
         extra_fields["is_staff"] = True
         extra_fields["is_superuser"] = True
-
         return self._create_user(email, password, **extra_fields)
 
 
@@ -36,7 +34,6 @@ class User(AbstractBaseUser):
         null=False,
         blank=False,
         help_text=_("Required. 10 characters or fewer. Letters, digits only."),
-        error_messages={"unique": _("A user with that nickname already exists.")},
     )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
