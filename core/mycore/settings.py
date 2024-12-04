@@ -15,6 +15,7 @@ from pathlib import Path
 from django.urls import reverse
 from django.contrib.messages import constants as messages
 import logging
+
 # UserModel
 AUTH_USER_MODEL = 'users.User'
 
@@ -37,7 +38,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mycore',
     'bootstrap4',
     'users',
     'profiles',
@@ -114,11 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# username대신 email을 사용하도록 설정
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_USERNAME_REQUIRED = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
