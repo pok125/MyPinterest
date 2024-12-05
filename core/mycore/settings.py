@@ -10,14 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import os, json, sys
-from pathlib import Path
-from django.urls import reverse
-from django.contrib.messages import constants as messages
+import json
 import logging
+import os
+import sys
+from pathlib import Path
+
+from django.contrib.messages import constants as messages
+from django.urls import reverse
 
 # UserModel
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,13 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # secrets.json 경로
-SECRETS_PATH = os.path.join(ROOT_DIR, 'secrets.json')
+SECRETS_PATH = os.path.join(ROOT_DIR, "secrets.json")
 
 # settings모듈에 할당
 secrets = json.loads(open(SECRETS_PATH).read())
 for key, value in secrets.items():
     setattr(sys.modules[__name__], key, value)
-    
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -41,59 +44,58 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'mycore',
-    'bootstrap4',
-    'users',
-    'profiles',
-    'pins',
-    'pingroups',
-    'comments',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "mycore",
+    "bootstrap4",
+    "users",
+    "pins",
+    "pingroups",
+    "comments",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'mycore.urls'
+ROOT_URLCONF = "mycore.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'mycore.wsgi.application'
+WSGI_APPLICATION = "mycore.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -103,144 +105,144 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = "ko-kr"
 
-TIME_ZONE = 'Asia/Seoul'
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
 USE_TZ = True
 
 # Login URL
-LOGIN_URL = '/users/login'
+LOGIN_URL = "/users/login"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "static",
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MESSAGE_TAGS = {
-    messages.ERROR: 'danger',
-    messages.SUCCESS: 'success',
+    messages.ERROR: "danger",
+    messages.SUCCESS: "success",
 }
 
-class SQLFormatter(logging.Formatter):
-    def format(self, record):
-        # Check if Pygments is available for coloring
-        try:
-            import pygments
-            from pygments.formatters import TerminalTrueColorFormatter
-            from pygments.lexers import SqlLexer
-        except ImportError:
-            pygments = None
+# class SQLFormatter(logging.Formatter):
+#     def format(self, record):
+#         # Check if Pygments is available for coloring
+#         try:
+#             import pygments
+#             from pygments.formatters import TerminalTrueColorFormatter
+#             from pygments.lexers import SqlLexer
+#         except ImportError:
+#             pygments = None
 
-        # Check if sqlparse is available for indentation
-        try:
-            import sqlparse
-        except ImportError:
-            sqlparse = None
+#         # Check if sqlparse is available for indentation
+#         try:
+#             import sqlparse
+#         except ImportError:
+#             sqlparse = None
 
-        # Remove leading and trailing whitespaces
-        sql = record.sql.strip()  # type: ignore
+#         # Remove leading and trailing whitespaces
+#         sql = record.sql.strip()  # type: ignore
 
-        if sqlparse:
-            # Indent the SQL query
-            sql = sqlparse.format(sql, reindent=True)
+#         if sqlparse:
+#             # Indent the SQL query
+#             sql = sqlparse.format(sql, reindent=True)
 
-        if pygments:
-            # Highlight the SQL query
-            sql = pygments.highlight(
-                sql,
-                SqlLexer(),  # type: ignore
-                # TerminalTrueColorFormatter(style='monokai')
-                TerminalTrueColorFormatter(),  # type: ignore
-            )
+#         if pygments:
+#             # Highlight the SQL query
+#             sql = pygments.highlight(
+#                 sql,
+#                 SqlLexer(),  # type: ignore
+#                 # TerminalTrueColorFormatter(style='monokai')
+#                 TerminalTrueColorFormatter(),  # type: ignore
+#             )
 
-        # Set the records statement to the formatted query
-        record.statement = sql
-        return super(SQLFormatter, self).format(record)
+#         # Set the records statement to the formatted query
+#         record.statement = sql
+#         return super(SQLFormatter, self).format(record)
 
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-    },
-    "formatters": {
-        "django_server_formatter": {
-            "()": "django.utils.log.ServerFormatter",
-            "format": "[{asctime}] {message}",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-            "style": "{",
-        },
-        "standard_formatter": {
-            "format": "[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-        },
-        "sql_formatter": {
-            "()": SQLFormatter,
-            "format": "\n[%(asctime)s] [%(duration).3f] \n %(statement)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-        },
-    },
-    "handlers": {
-        "django_server_handler": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "standard_formatter",
-        },
-        "sql_handler": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "sql_formatter",
-        },
-    },
-    "loggers": {
-        "django.db.backends": {
-            "handlers": ["sql_handler"],
-            "level": "DEBUG",
-        },
-        "django.server": {
-            "handlers": ["django_server_handler"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "filters": {
+#         "require_debug_true": {
+#             "()": "django.utils.log.RequireDebugTrue",
+#         },
+#         "require_debug_false": {
+#             "()": "django.utils.log.RequireDebugFalse",
+#         },
+#     },
+#     "formatters": {
+#         "django_server_formatter": {
+#             "()": "django.utils.log.ServerFormatter",
+#             "format": "[{asctime}] {message}",
+#             "datefmt": "%Y-%m-%d %H:%M:%S",
+#             "style": "{",
+#         },
+#         "standard_formatter": {
+#             "format": "[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
+#             "datefmt": "%Y-%m-%d %H:%M:%S",
+#         },
+#         "sql_formatter": {
+#             "()": SQLFormatter,
+#             "format": "\n[%(asctime)s] [%(duration).3f] \n %(statement)s",
+#             "datefmt": "%Y-%m-%d %H:%M:%S",
+#         },
+#     },
+#     "handlers": {
+#         "django_server_handler": {
+#             "level": "DEBUG",
+#             "class": "logging.StreamHandler",
+#             "formatter": "standard_formatter",
+#         },
+#         "sql_handler": {
+#             "level": "DEBUG",
+#             "class": "logging.StreamHandler",
+#             "formatter": "sql_formatter",
+#         },
+#     },
+#     "loggers": {
+#         "django.db.backends": {
+#             "handlers": ["sql_handler"],
+#             "level": "DEBUG",
+#         },
+#         "django.server": {
+#             "handlers": ["django_server_handler"],
+#             "level": "DEBUG",
+#             "propagate": False,
+#         },
+#     },
+# }
