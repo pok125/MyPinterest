@@ -35,6 +35,8 @@ class User(AbstractBaseUser):
         blank=False,
         help_text=_("Required. 10 characters or fewer. Letters, digits only."),
     )
+    image = models.ImageField(upload_to="profiles/", null=True, blank=True)
+    message = models.CharField(max_length=100, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
