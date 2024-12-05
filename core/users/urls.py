@@ -11,5 +11,5 @@ urlpatterns = [
     path("following/<int:user_id>", FollowingView.as_view(), name="following"),
     path("unfollowing/<int:user_id>", UnFollowingView.as_view(), name="unfollowing"),
     path("mypage/<int:user_id>/", MyPageView.as_view(), name="mypage"),
-    path("update/<int:user_id>/", MyPageUpdateView.as_view(), name="update"),
+    path("update/", MyPageUpdateView.as_view(), name="update"),
 ]

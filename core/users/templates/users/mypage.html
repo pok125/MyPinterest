@@ -6,8 +6,8 @@
 <div class="profile-container">
 
     <!-- 프로필 이미지 -->
-    {% if user.image %}
-    <img src="{{ user.image.url }}" alt=""
+    {% if target_user.image %}
+    <img src="{{ target_user.image.url }}" alt=""
         style="height: 12rem; width: 12rem; border-radius: 10rem; margin-bottom: 2rem;">
     {% else %}
     <img src="{% static 'image/default_profile.png' %}" alt=""
@@ -16,22 +16,22 @@
 
     <!-- 닉네임 -->
     <h2>
-        {{ target_user.username }}
+        {{ target_user.nickname }}
     </h2>
     <!-- 메세지 -->
     <p>
 
-        {% if user.message %}
-        {{ user.message }}
+        {% if target_user.message %}
+        {{ target_user.message }}
         {% endif %}
     </p>
     <p>
         등록한 pin: {{ pin_count }} | 팔로우: {{ following_count }}
     </p>
-    {% if target_user == request.user %}
+    {% if target_user == user %}
     <div class="d-flex">
-        <a class="btn btn-dark rounded-pill w-50" href="{% url 'users:update' user_id=user.id %}">수정하기</a>
-        <form class="w-50" action="{% url 'users:delete' user_id=target_user.pk %}" method="post" id="delete-form">
+        <a class="btn btn-dark rounded-pill w-50" href="{% url 'users:update' %}">수정하기</a>
+        <form class="w-50" action="{% url 'users:delete' user_id=user.id %}" method="post" id="delete-form">
             {% csrf_token %}
             <button type="submit" class="btn rounded-pill btn-danger w-100" id="delete-btn">회원탈퇴</button>
         </form>

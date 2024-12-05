@@ -80,7 +80,7 @@ class FollowForm(forms.ModelForm):
         return cleaned_data
 
 
-class MyPageForm(forms.ModelForm):
+class MyPageUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["image"]
+        fields = ["image", "message"]
