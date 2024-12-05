@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="profile-container">
+
+    <!-- 프로필 이미지 -->
+    {% if user.image %}
+    <img src="{{ user.image.url }}" alt=""
+        style="height: 12rem; width: 12rem; border-radius: 10rem; margin-bottom: 2rem;">
+    {% else %}
+    <img src="{% static 'image/default_profile.png' %}" alt=""
+        style="height: 12rem; width: 12rem; border-radius: 10rem; margin-bottom: 2rem;">
+    {% endif %}
+
+    <!-- 닉네임 -->
+    <h2>
+        {{ target_user.username }}
+    </h2>
+    <!-- 메세지 -->
+    <p>
+
+        {% if user.message %}
+        {{ user.message }}
+        {% endif %}
+    </p>
+    <p>
+        등록한 pin: {{ pin_count }} | 팔로우: {{ following_count }}
+    </p>
+    {% if target_user == request.user %}
+    <div class="d-flex">
+        <a class="btn btn-dark rounded-pill w-50" href="{% url 'users:update' user_id=user.id %}">수정하기</a>
+        <form class="w-50" action="{% url 'users:delete' user_id=target_user.pk %}" method="post" id="delete-form">
+            {% csrf_token %}
+            <button type="submit" class="btn rounded-pill btn-danger w-100" id="delete-btn">회원탈퇴</button>
+        </form>
+    </div>
+    {% else %}
+
+    {% if user.is_authenticated %}
+
+    {% if is_following %}
+    <a class="btn btn-danger rounded-pill w-50" href="{% url 'users:unfollowing' user_id=target_user.pk %}">팔로우 취소</a>
+    {% else %}
+    <a class="btn btn-dark rounded-pill w-50" href="{% url 'users:following' user_id=target_user.pk %}">팔로우</a>
+    {% endif %}
+    {% endif %}
+
+    {% endif %}
+</div>
+<hr>
+
+<script>
+    document.getElementById('delete-form').addEventListener('submit', function (event) {
+        event.preventDefault();  // 폼의 기본 제출 동작 중단
+
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            this.submit();  // 확인 시 폼 제출
+        }
+    });
+</script>
+{% endblock %}
