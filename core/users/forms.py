@@ -4,8 +4,6 @@ from typing import Any
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.db import transaction
-from profiles.models import Profile
 
 from .models import Follow
 
@@ -53,11 +51,7 @@ class JoinForm(UserCreationForm):
         password = cleaned_data.pop("password1")
         cleaned_data.pop("password2")
 
-        with transaction.atomic():
-            user = User.objects.create_user(
-                email=email, password=password, **cleaned_data
-            )
-            Profile.objects.create(user=user)
+        user = User.objects.create_user(email=email, password=password, **cleaned_data)
         return user
 
 
@@ -84,3 +78,9 @@ class FollowForm(forms.ModelForm):
         if Follow.objects.filter(from_user=from_user, to_user=to_user).exists():
             raise forms.ValidationError("이미 팔로우한 유저입니다.")
         return cleaned_data
+
+
+class MyPageForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["image"]
