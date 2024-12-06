@@ -24,24 +24,24 @@
                         <a href="{% url 'pins:bookmark' pin_id=pin.pk%}">
                             <i class="bi bi-star me-3"></i>
                         </a>
-                        <p>{{ pin.book_mark.count }}</p>
+                        <p>{{ pin.book_mark_count }}</p>
                     </div>
                 </div>
                 <!-- 작성자 정보 -->
                 <div class="d-flex mb-3">
                     <!-- 유저 이미지 -->
-                    <a class="me-3" href="{% url 'profiles:mypage' user_id=pin.writer.pk %}">
-                        
-                        {% if pin.writer.profile.image %}
-                        <img class="pin-detail-writer-img" src="{{ pin.writer.profile.image.url }}" alt="">
+                    <a class="me-3" href="{% url 'users:mypage' user_id=pin.writer.pk %}">
+
+                        {% if pin.writer.image %}
+                        <img class="pin-detail-writer-img" src="{{ pin.writer.image.url }}" alt="">
                         {% else %}
                         <img class="pin-detail-writer-img" src="{% static 'image/default_profile.png' %}" alt="">
                         {% endif %}
                     </a>
                     <!-- 유저정보 -->
                     <div class="mt-2">
-                        <p class="mb-1">{{ pin.writer.username }}</p>
-                        <p>팔로워 {{ writer_following_count }}</p>
+                        <p class="mb-1">{{ pin.writer.nickname }}</p>
+                        <p>팔로워 {{ pin.writer.followers_count }}</p>
                     </div>
                 </div>
                 <!-- content -->
@@ -56,18 +56,18 @@
                 <div class="comment-list">
                     <ul>
                         {% if comments %}
-                            {% for comment in comments %}
-                                <li>
-                                    {{ comment.content }}
-                                    
-                                    {% if user.is_authenticated and comment.writer == user %}
-                                    <a href="{% url 'comments:delete' comment_id=comment.pk %}">
-                                        <i class="bi bi-x-square"></i>
-                                    </a>
-                                    {% endif %}
-                                </li>
-                                
-                            {% endfor %}
+                        {% for comment in comments %}
+                        <li>
+                            {{ comment.content }}
+
+                            {% if user.is_authenticated and comment.writer == user %}
+                            <a href="{% url 'comments:delete' comment_id=comment.pk %}">
+                                <i class="bi bi-x-square"></i>
+                            </a>
+                            {% endif %}
+                        </li>
+
+                        {% endfor %}
                         {% endif %}
                     </ul>
                 </div>
@@ -86,16 +86,16 @@
         {% csrf_token %}
         <button type="submit" class="btn rounded-pill btn-danger w-100" id="delete-btn">삭제하기</button>
     </form>
-</div>  
+</div>
 
 <script>
-    document.getElementById('delete-form').addEventListener('submit', function(event) {
+    document.getElementById('delete-form').addEventListener('submit', function (event) {
         event.preventDefault();  // 폼의 기본 제출 동작 중단
-        
+
         if (confirm('정말로 삭제하시겠습니까?')) {
             this.submit();  // 확인 시 폼 제출
         }
     });
 </script>
-{% endif %}  
+{% endif %}
 {% endblock %}

@@ -158,7 +158,7 @@ class MyPageView(View):
         is_following = False
 
         if (
-            not user.is_authenticated
+            not user.is_anonymous
             and Follow.objects.filter(from_user=user, to_user=target_user).exists()
         ):
             is_following = True
