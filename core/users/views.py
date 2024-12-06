@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
@@ -153,24 +154,24 @@ class UnFollowingView(LoginRequiredMixin, View):
 class MyPageView(View):
     # mypage
     def get(self, request, user_id):
-        target_user = get_object_or_404(User, pk=user_id)
+        target_user = get_object_or_404(
+            User.objects.only("id", "nickname", "image", "message").annotate(
+                pin_count=Count("pin")
+            ),
+            pk=user_id,
+        )
+
         user = request.user
         is_following = False
 
-        if (
-            not user.is_anonymous
-            and Follow.objects.filter(from_user=user, to_user=target_user).exists()
-        ):
+        if Follow.objects.filter(from_user=user, to_user=target_user).exists():
             is_following = True
-
-        pin_count = target_user.pin.count()
-        following_count = target_user.followers_count
 
         context = {
             "target_user": target_user,
             "user": user,
-            "pin_count": pin_count,
-            "following_count": following_count,
+            "pin_count": target_user.pin_count,
+            "following_count": target_user.followers_count,
             "is_following": is_following,
         }
 

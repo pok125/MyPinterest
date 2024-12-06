@@ -2,6 +2,7 @@ from comments.models import Comment
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
@@ -14,7 +15,9 @@ from .models import BookMark, LikeRecord, Pin
 class PinListView(View):
     # pin리스트 페이지
     def get(self, request):
-        pins = Pin.objects.all()
+        pins = Pin.objects.only("id", "image", "title").annotate(
+            liker_count=Count("likers")
+        )
         context = {"pin_list": pins}
 
         return render(request, "pins/list.html", context=context)
@@ -90,7 +93,7 @@ class PinUpdateView(LoginRequiredMixin, View):
             return HttpResponseBadRequest()
 
         initial = self.get_initial(pin)
-        form = PinCreationForm(initial=initial)
+        form = PinCreationForm(user=user, initial=initial)
         context = {"pin_id": pin_id, "form": form}
 
         return render(request, "pins/update.html", context=context)
@@ -98,7 +101,9 @@ class PinUpdateView(LoginRequiredMixin, View):
     # Pin수정 요청
     def post(self, request, pin_id):
         pin = get_object_or_404(Pin, pk=pin_id)
-        form = PinCreationForm(data=request.POST, files=request.FILES)
+        form = PinCreationForm(
+            user=request.user, data=request.POST, files=request.FILES
+        )
 
         if form.is_valid():
             pin.title = form.cleaned_data["title"]

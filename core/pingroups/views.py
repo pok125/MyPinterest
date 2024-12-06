@@ -51,14 +51,17 @@ class PinGroupCreateView(LoginRequiredMixin, View):
 class PinGroupDetailView(LoginRequiredMixin, View):
     # PinGroup 상세 페이지
     def get(self, request, pingroup_id):
-        pingroup = get_object_or_404(PinGroup, pk=pingroup_id)
+        pingroup = get_object_or_404(
+            PinGroup.objects.select_related("user").prefetch_related("pin"),
+            pk=pingroup_id,
+        )
         user = request.user
 
         if pingroup.user != user:
             return HttpResponseBadRequest()
 
         pin_list = pingroup.pin.all()
-        pin_count = pin_list.count()
+        pin_count = len(pin_list)
         context = {"pingroup": pingroup, "pin_count": pin_count, "pin_list": pin_list}
 
         return render(request, "pingroups/detail.html", context=context)
