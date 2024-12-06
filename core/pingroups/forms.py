@@ -7,4 +7,4 @@ class PinGroupCreationForm(ModelForm):
 
     class Meta:
         model = PinGroup
-        fields = ['title', 'image', 'content']
+        fields = ["title", "image", "content"]
